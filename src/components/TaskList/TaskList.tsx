@@ -1,49 +1,183 @@
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './taskList.scss';
-import { NavLink, useLocation } from 'react-router-dom';
-import classNames from 'classnames';
+import { IRemovedTask, ITask } from '../../data';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { ITaskAction, TaskActionEnum, TaskStatus } from '../../types/types';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { useTypedSelector } from '../../hooks/useTypeSelector';
 
-const taskList = [
-  { id: 1, taskName: 'design', path: '/design' },
+interface ITaskArray {
+  devTaskList: ITask[];
+  doneTaskList: ITask[];
+  queueTaskList: ITask[];
+  projectItemId: number;
+  taskArray: ITask[];
+}
+// const itemsFromBackend = [
+//   { id: '1', content: 'First task' },
+//   { id: '2', content: 'Second task' },
+//   { id: '3', content: 'Third task' },
+//   { id: '4', content: 'Fourth task' },
+//   { id: '5', content: 'Fifth task' },
+// ];
 
-  { id: 2, taskName: 'layout', path: '/layout' },
+export const TaskList: FC<ITaskArray> = ({
+  devTaskList,
+  doneTaskList,
+  queueTaskList,
+  projectItemId,
+  taskArray
+}) => {
+  const dispatch = useDispatch();
 
-  { id: 3, taskName: 'development', path: '/development' }
-];
+  const { projectList } = useTypedSelector((state) => state.projects);
+  console.log(projectList);
 
-export const TaskList = () => {
-  const { pathname } = useLocation();
+  const dispatchRemovedStatus = (dispatch: Dispatch<ITaskAction>, task: IRemovedTask) => {
+    dispatch({ type: TaskActionEnum.EDIT_TASK, payload: task });
+  };
+
+  const onDragEnd = (
+    result: DropResult,
+    columns: { [p: string]: any },
+    setColumns: (arg0: any) => void
+  ) => {
+    if (!result.destination) return;
+    const { source, destination } = result;
+
+    if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
+      const [removed] = sourceItems.splice(source.index, 1);
+      destItems.splice(destination.index, 0, removed);
+
+      const foundetTask = taskArray.find((item) => item.id === removed.id);
+
+      const removedTask = {
+        projectId: projectItemId,
+        id: removed.id,
+        status: destColumn.name,
+        taskBody: {},
+        taskName: foundetTask?.taskName as string
+      };
+
+      dispatchRemovedStatus(dispatch, removedTask);
+
+      // setColumns({
+      //   ...columns,
+      //   [source.droppableId]: {
+      //     ...sourceColumn,
+      //     items: sourceItems
+      //   },
+      //   [destination.droppableId]: {
+      //     ...destColumn,
+      //     items: destItems
+      //   }
+      // });
+    } else {
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
+      setColumns({
+        ...columns,
+        [source.droppableId]: {
+          ...column,
+          items: copiedItems
+        }
+      });
+    }
+  };
+
+  const columnsObj = {
+    '1': {
+      name: TaskStatus.QUEUE,
+      items: queueTaskList
+    },
+    '2': {
+      name: TaskStatus.DEVELOPMENT,
+      items: devTaskList
+    },
+    '3': {
+      name: TaskStatus.DONE,
+      items: doneTaskList
+    }
+  };
+
+  const [columns, setColumns] = useState(columnsObj);
+
+  // console.log('devTaskList', devTaskList);
+  // console.log(' doneTaskList', doneTaskList);
+  // console.log('queueTaskList', queueTaskList);
+
+  useEffect(() => {
+    setColumns(columnsObj);
+  }, [devTaskList, doneTaskList, queueTaskList]);
 
   return (
-    <div className="TaskList">
-      <div className="TaskList__wrap">
-        <NavLink
-          className={classNames('TaskList__item', {
-            activeItem: pathname === '/design'
-          })}
-          to={'/design'}
-          end={true}>
-          Design
-        </NavLink>
-
-        <NavLink
-          className={classNames('TaskList__item', {
-            activeItem: pathname === '/layout'
-          })}
-          to={'/layout'}
-          end={true}>
-          Layout
-        </NavLink>
-
-        <NavLink
-          className={classNames('TaskList__item', {
-            activeItem: pathname === '/development'
-          })}
-          to={'/development'}
-          end={true}>
-          Development
-        </NavLink>
-      </div>
+    <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
+      <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+        {Object.entries(columns).map(([columnId, column], index) => {
+          return (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
+              key={columnId}>
+              <h2>{column.name}</h2>
+              <div style={{ margin: 8 }}>
+                <Droppable droppableId={columnId} key={columnId}>
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{
+                          background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
+                          padding: 4,
+                          width: 250,
+                          minHeight: 500
+                        }}>
+                        {column.items.map((item, index) => {
+                          return (
+                            <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={{
+                                      userSelect: 'none',
+                                      padding: 16,
+                                      margin: '0 0 8px 0',
+                                      minHeight: '50px',
+                                      backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
+                                      color: 'white',
+                                      ...provided.draggableProps.style
+                                    }}>
+                                    {item.taskName}
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
+                        {provided.placeholder}
+                      </div>
+                    );
+                  }}
+                </Droppable>
+              </div>
+            </div>
+          );
+        })}
+      </DragDropContext>
     </div>
   );
 };
