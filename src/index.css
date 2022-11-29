@@ -15,16 +15,21 @@ code {
   box-sizing: border-box;
 }
 .app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  /*position: relative;*/
   height: 100vh;
 }
 .container {
   max-width: 90%;
   width: 1354px;
   margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 button,a {
@@ -56,3 +61,8 @@ button,a:hover {
 ul{
   padding-inline-start: 0;
 }
+.scrollBlock {
+    height: 400px;
+    overflow: auto;
+  margin-bottom: 8px;
+  }

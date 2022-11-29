@@ -1,12 +1,13 @@
 .taskList {
   &__wrap {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    //flex-direction: column;
+    //align-items: flex-start;
+    justify-content: center;
     margin-top: 5px;
-    padding: 5px 10px 5px 15px;
+    //padding: 5px 10px 5px 15px;
     border-radius: 5px;
-    max-width: 200px;
+    //max-width: 200px;
     li {
       width: 100%;
     }

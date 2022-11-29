@@ -5,23 +5,20 @@ import { Project } from './components/ProjectList/Project/Project';
 import { useTypedSelector } from './hooks/useTypeSelector';
 
 const App = () => {
-  const { projectList } = useTypedSelector((state) => state.projects);
+  const { projects } = useTypedSelector((state) => state.projects);
 
   return (
     <>
       <BrowserRouter>
         <div className="app">
-          <Routes>
-            <Route path={'/'} element={<ProjectList />} />
-
-            {projectList?.map((item) => (
-              <Route
-                key={item.id}
-                path={`${item.path}`}
-                element={<Project projectItemName={item.projectName} />}
-              />
-            ))}
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route path={'/'} element={<ProjectList />} />
+              {projects?.map((item) => (
+                <Route key={item.id} path={`/${item.id}`} element={<Project project={item} />} />
+              ))}
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </>
