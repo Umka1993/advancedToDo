@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import './addTaskForm.scss';
 import loadPhoto from '../../../assets/icons/loadPhoto.png';
 import classNames from 'classnames';
@@ -8,7 +8,7 @@ import {
   TaskActionEnum,
   taskPriority,
   taskPriorityEnum,
-  TaskStatus
+  TaskStatus,
 } from '../../../store/reducers/tasks/taskTypes';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -94,8 +94,13 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
     setReadyDate('');
   };
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const addNewTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(formRef.current as HTMLFormElement);
+
+    console.log(formData);
 
     const newTask: ITask = {
       description,
@@ -106,7 +111,7 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
       isCanAddSubTask: true,
       id: ++Object.keys(tasks).length,
       createDate,
-      readyDate
+      readyDate,
     };
     setNewTask(newTask);
     resetForm();
@@ -140,7 +145,8 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
           name={'priority'}
           value={priority}
           onChange={(e) => setPriority(e.target.value as taskPriority)}
-          placeholder={'Select priority:'}>
+          placeholder={'Select priority:'}
+        >
           <option value="1">standard</option>
           <option value="2">height</option>
         </select>
@@ -151,7 +157,8 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
           name={'status'}
           value={newStatus}
           // defaultValue={status}
-          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}>
+          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
+        >
           <option value="QUEUE">QUEUE</option>
           <option value="DEVELOPMENT">DEVELOPMENT</option>
           <option value="DONE">DONE</option>
@@ -202,7 +209,7 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
           Фото
           <div
             className={classNames('photoBlock', {
-              photoBlockPreview: preview
+              photoBlockPreview: preview,
             })}
             style={
               preview != null
@@ -210,10 +217,11 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
                     backgroundImage: `url(${preview})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundRepeat: 'no-repeat',
                   }
                 : {}
-            }>
+            }
+          >
             <img src={loadPhoto} alt="loadPhoto" />
           </div>
           <input
