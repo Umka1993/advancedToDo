@@ -1,7 +1,23 @@
 export interface ITask {
   id: number;
   name: string;
-  status: TaskStatus.DEVELOPMENT | TaskStatus.DONE | TaskStatus.QUEUE;
+  status: taskStatus;
+  description?: string;
+  createDate: string;
+  inProgressTime?: string;
+  readyDate?: string;
+  priority?: taskPriority;
+  files?: Blob | string;
+  isCanAddSubTask: boolean;
+  comments?: number[];
+  subTasks?: [1, 2];
+}
+
+export type taskStatus = TaskStatus.DEVELOPMENT | TaskStatus.DONE | TaskStatus.QUEUE;
+export type taskPriority = taskPriorityEnum.HEIGHT | taskPriorityEnum.STANDARD;
+export enum taskPriorityEnum {
+  STANDARD = 'standard',
+  HEIGHT = 'height'
 }
 
 export type tasksItem = Record<number, ITask>;

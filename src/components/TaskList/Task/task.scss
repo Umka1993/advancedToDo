@@ -1,0 +1,96 @@
+.task {
+  color: black;
+  user-select: none;
+  padding: 5px;
+  margin: 0 0 8px 0;
+  min-height: 50px;
+  border-radius: 15px;
+  p {
+    margin: 0;
+  }
+  &__headline {
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    span {
+      margin-right: 5px;
+    }
+
+    .edit {
+      margin-left: auto;
+      width: 30px;
+      height: 30px;
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+      &:hover {
+        padding: 0;
+      }
+    }
+  }
+
+  &__body {
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+
+    p {
+      font-size: 15px;
+    }
+    .table {
+      border-collapse: collapse;
+
+      tbody {
+        tr {
+          border-bottom: 1px solid black;
+          height: 35px;
+          vertical-align: bottom;
+          td {
+            &:nth-child(even) {
+              text-align: center;
+            }
+          }
+
+          th {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .description {
+      margin-top: 20px;
+      padding: 0 5px 5px 0;
+
+      &__title {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+    }
+    .files {
+      color: #9e9696;
+      text-align: right;
+    }
+
+    .subtasks {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+
+      &__form {
+        position: absolute;
+        top: 0;
+        z-index: -1;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+  }
+}

@@ -15,10 +15,6 @@ code {
   box-sizing: border-box;
 }
 .app {
-  /*display: flex;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-  /*position: relative;*/
   height: 100vh;
 }
 .container {
@@ -36,33 +32,64 @@ button,a {
   background: none;
   transition: all 0.1s linear;
 }
+@keyframes rotate{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(90deg);
+  }
+}
 
+.justClick {
+  animation: rotate 200ms linear;
+}
 button,a:hover {
   background: gray;
   color: white;
   border-radius: 5px;
 }
-.goBackButton {
-  position: absolute;
-  top: -100px;
-  left: 0;
-  width: 60px;
-  height: 60px;
-  border: none;
-  border-radius: 5px;
-  font-size: 20px;
-  text-decoration: none;
-  color: black;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 ul{
   padding-inline-start: 0;
 }
-.scrollBlock {
-    height: 400px;
-    overflow: auto;
-  margin-bottom: 8px;
-  }
+
+button {
+  background: transparent;
+  border: none;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 0;
+  margin-left: 10px
+}
+button:hover {
+  color: white;
+  background: #395d77;
+  cursor: pointer;
+  padding: 2px;
+}
+button:hover svg {
+  fill: white;
+  transition: all 0.1s linear;
+}
+
+button svg {
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  fill: black;
+}
+textarea {
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+  margin-top: 5px;
+}
+

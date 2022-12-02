@@ -1,4 +1,8 @@
-import { IProjectsState } from './projectTypes';
+import { IProject, IProjectAction, IProjectsState, ProjectActionEnum } from './projectTypes';
+
+const getCopyProject = (state: IProjectsState, projectId: number) => {
+  return state.projects.find((project) => project.id === projectId);
+};
 
 const initialState: IProjectsState = {
   projects: [
@@ -6,24 +10,40 @@ const initialState: IProjectsState = {
       name: 'Create Amazon',
       id: 1,
       path: '/createAmazon',
-      tasks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      tasks: [1]
     },
     { name: 'Create AliExpress', id: 2, path: '/createAliExpress', tasks: [] },
     { name: 'Dinner with my wife', id: 3, path: '/dinner', tasks: [] }
   ]
 };
 
-export const projectsReducer = (
-  state = initialState,
-  action: { type: string; payload: any }
-): IProjectsState => {
+export const projectsReducer = (state = initialState, action: IProjectAction): IProjectsState => {
   switch (action.type) {
-    case 'ADD_PROJECT':
+    case ProjectActionEnum.ADD_PROJECT:
       return { ...state };
-    case 'DELETE_PROJECT': {
+    case ProjectActionEnum.ADD_NEWTASK_TOPROJECT: {
+      const editedProject = getCopyProject(state, action.payload.projectId);
+
+      const copyEditedProject = { ...editedProject };
+
+      const tasks = (copyEditedProject as IProject).tasks.map((item) => item);
+
+      tasks?.push(action.payload.id);
+
+      copyEditedProject.tasks = tasks;
+
+      const copyProjects = state.projects.map((project) =>
+        project.id === action.payload.projectId ? copyEditedProject : project
+      );
+
+      // возвращаю стейт и измененный projects []
+      return { ...state, projects: copyProjects as IProject[] };
+    }
+
+    case ProjectActionEnum.DELETE_PROJECT: {
       return { ...state };
     }
-    case 'EDIT_PROJECT':
+    case ProjectActionEnum.EDIT_PROJECT:
       return { ...state };
     default:
       return state;

@@ -1,0 +1,373 @@
+.AddTaskForm {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      position: relative;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 22px;
+      letter-spacing: -0.408px;
+      color: black;
+      padding-left: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+      &:not([type='file']) {
+        margin-top: 5px;
+        padding: 7px 12px;
+        border: none;
+        background: #5f9ea0a6;
+        border-radius: 10px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 22px;
+        letter-spacing: -0.408px;
+        color: black;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      max-height: 100px;
+      height: auto;
+    }
+
+    .manageSubtasks {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      margin-top: 15px;
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 25px;
+        margin-top: 0;
+        margin-left: 10px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: '';
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        top: 50%;
+        transform: translate(0, -50%);
+        background-color: #5f9ea0a6;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: #5f9ea0a6;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196f3;
+      }
+
+      input:checked + .slider:before {
+        background-color: white;
+        top: 50%;
+        transform: translate(30px, -50%);
+      }
+
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+    }
+    .labelPhoto {
+      width: 70px;
+      height: 70px;
+    }
+
+    label > [type='file'] {
+      width: 65px;
+      height: 65px;
+      position: absolute;
+      top: 23px;
+      left: 10px;
+      z-index: -99;
+      font-size: 0;
+      opacity: 0;
+
+      .photoBlock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 65px;
+        height: 65px;
+        background-color: rgba(118, 118, 128, 0.24);
+        border-radius: 10px;
+        margin-left: -12px;
+        cursor: pointer;
+
+        img {
+          width: 60px;
+          height: 56px;
+        }
+      }
+
+      .photoBlockPreview {
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .submitButton {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      position: relative;
+
+      .addButton {
+        padding: 10px 40px;
+        background: #5f9ea0a6;
+      }
+
+      //@-webkit-keyframes {
+      //}
+      @-webkit-keyframes extend {
+        0% {
+          width: 100px;
+          height: 40px;
+          border-radius: 100px;
+          margin-left: 0;
+        }
+        //10% {
+        //  width: 100px;
+        //  height: 50px;
+        //  //background: #fff;
+        //  margin-left: -5px;
+        //  //margin-top: -5px;
+        //}
+        //20% {
+        //  width: 100px;
+        //  height: 55px;
+        //  //background: #5f9ea0a6;
+        //  margin-left: 0px;
+        //  margin-top: 0px;
+        //}
+
+        50% {
+          width: 80px;
+          height: 50px;
+          margin-left: 18px;
+        }
+        100% {
+          width: 60px;
+          height: 60px;
+          border-radius: 100px;
+          margin-left: 35px;
+          //margin-left: 100px;
+          //background: #5f9ea0a6;
+        }
+      }
+      @keyframes extend {
+        0% {
+          width: 100px;
+          height: 40px;
+          border-radius: 100px;
+          margin-left: 0;
+        }
+        //10% {
+        //  width: 100px;
+        //  height: 50px;
+        //  //background: #fff;
+        //  margin-left: -5px;
+        //  //margin-top: -5px;
+        //}
+        //20% {
+        //  width: 100px;
+        //  height: 55px;
+        //  //background: #5f9ea0a6;
+        //  margin-left: 0px;
+        //  margin-top: 0px;
+        //}
+
+        50% {
+          width: 80px;
+          height: 50px;
+          margin-left: 18px;
+        }
+        100% {
+          width: 60px;
+          height: 60px;
+          border-radius: 100px;
+          margin-left: 35px;
+          //margin-left: 100px;
+          //background: #5f9ea0a6;
+        }
+      }
+      //@-webkit-keyframes {
+      //}
+      @-webkit-keyframes disappear {
+        0% {
+          opacity: 0;
+          font-size: 0;
+        }
+        20% {
+          //color: #fff;
+          //font-size: 15px;
+        }
+        100% {
+          font-size: 0;
+          opacity: 0;
+        }
+      }
+      @keyframes disappear {
+        0% {
+          opacity: 0;
+          font-size: 0;
+        }
+        20% {
+          //color: #fff;
+          //font-size: 15px;
+        }
+        100% {
+          font-size: 0;
+          opacity: 0;
+        }
+      }
+      //@-webkit-keyframes {
+      //}
+      @-webkit-keyframes appear {
+        0% {
+          opacity: 0;
+        }
+        70% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes appear {
+        0% {
+          opacity: 0;
+        }
+        70% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .buttonWrap {
+        position: absolute;
+        width: 110px;
+        height: 10px;
+        //left: calc(100% + 55px);
+        //top: 125px;
+        //margin: -100px 0 0 -300px;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        button {
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      button {
+        border-width: 1px;
+        text-align: center;
+        width: 110px;
+        height: 40px;
+        /*border-radius*/
+        border-radius: 100px;
+        background: #fff;
+        position: absolute;
+        //border: 5px solid #6fb07f;
+      }
+
+      button > span {
+        //font-size: 35px;
+        color: black;
+        width: 100%;
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
+        filter: alpha(opacity=0);
+        opacity: 0;
+      }
+
+      button:focus {
+        /*animation*/
+        -webkit-animation: extend 200ms linear;
+        -ms-animation: extend 200ms linear;
+        animation: extend 200ms linear;
+        -webkit-animation-fill-mode: forwards;
+        /* Chrome, Safari, Opera */
+        animation-fill-mode: forwards;
+      }
+
+      button:focus > span {
+        /*animation*/
+        -webkit-animation: disappear 1s ease-in-out;
+        -ms-animation: disappear 1s ease-in-out;
+        animation: disappear 1s ease-in-out;
+        -webkit-animation-fill-mode: forwards;
+        /* Chrome, Safari, Opera */
+        animation-fill-mode: forwards;
+      }
+
+      button:focus > img {
+        /*animation*/
+        -webkit-animation: appear 300ms linear;
+        -ms-animation: appear 300ms linear;
+        animation: appear 300ms linear;
+        -webkit-animation-fill-mode: forwards;
+        /* Chrome, Safari, Opera */
+        animation-fill-mode: forwards;
+      }
+    }
+
+    //  ___________
+  }
+}

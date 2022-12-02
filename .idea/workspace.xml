@@ -4,26 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="add drag and drop for task">
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/projects/projectTypes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/projects/projectsReducer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" afterDir="false" />
+    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="refactoring &#10;  --add projectsReducer.ts&#10;  --edit taskReducer.ts&#10;  --edit TaskList.tsx">
+      <change afterPath="$PROJECT_DIR$/src/Dialog/Modal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Dialog/modal.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/add-svgrepo-com.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/add.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/edit-svgrepo-com.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/icons8-close.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/icons/loadPhoto.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GoBack/GoBack.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/GoBack/goBack.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/addTaskForm.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/Task/task.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useOnClickOutside.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/react-app-env.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ProjectList/Project/Project.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectList/Project/Project.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ProjectList/Project/project.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectList/Project/project.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProjectList/ProjectList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectList/ProjectList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProjectList/projectList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectList/projectList.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TaskList/taskList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/taskList.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TodoList/TodoList.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TodoList/todoList.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/taskReducer.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/styles/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/projects/projectTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/projects/projectTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/projects/projectsReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/projects/projectsReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,9 +44,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Sass File" />
+        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
         <option value="SCSS File" />
-        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -55,40 +65,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/src/store/reducers&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/stylelint&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "js.linters.configure.manually.selectedeslint": "true",
+    "last_opened_file_path": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/src/assets/icons",
+    "list.type.of.created.stylesheet": "SCSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/icons" />
       <recent name="$PROJECT_DIR$/src/store/reducers" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets/icons" />
+      <recent name="$PROJECT_DIR$/src/dialog/hooks" />
+      <recent name="$PROJECT_DIR$/src/assets/styles" />
+      <recent name="$PROJECT_DIR$/src/dialog" />
       <recent name="$PROJECT_DIR$/src/store/reducers/tasks" />
-      <recent name="$PROJECT_DIR$/src/store/reducers/projects" />
-      <recent name="$PROJECT_DIR$/src/components/ProjectList" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager" selected="npm.lint">
@@ -134,7 +146,8 @@
       <workItem from="1669385079557" duration="315000" />
       <workItem from="1669385397778" duration="704000" />
       <workItem from="1669386105455" duration="70166000" />
-      <workItem from="1669717976625" duration="31467000" />
+      <workItem from="1669717976625" duration="46736000" />
+      <workItem from="1669810371649" duration="86029000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <created>1669382310535</created>
@@ -164,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669664199198</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactoring &#10;  --add projectsReducer.ts&#10;  --edit taskReducer.ts&#10;  --edit TaskList.tsx">
+      <created>1669758827974</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669758827974</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +219,7 @@
     <MESSAGE value="add eslint and prettier to project&#10;add TaskList.tsx and styles&#10;add Layout.tsx and styles" />
     <MESSAGE value="add drag and drop task" />
     <MESSAGE value="add drag and drop for task" />
-    <option name="LAST_COMMIT_MESSAGE" value="add drag and drop for task" />
+    <MESSAGE value="refactoring &#10;  --add projectsReducer.ts&#10;  --edit taskReducer.ts&#10;  --edit TaskList.tsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring &#10;  --add projectsReducer.ts&#10;  --edit taskReducer.ts&#10;  --edit TaskList.tsx" />
   </component>
 </project>

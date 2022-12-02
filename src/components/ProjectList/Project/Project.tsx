@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { NavLink, useLocation } from 'react-router-dom';
 import './project.scss';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 
@@ -8,6 +7,7 @@ import { TaskList } from '../../TaskList/TaskList';
 import { ITask, TaskStatus } from '../../../store/reducers/tasks/taskTypes';
 import { IProject } from '../../../store/reducers/projects/projectTypes';
 import { ITasksStatusSort } from '../../../types/types';
+import { GoBack } from '../../GoBack/GoBack';
 
 interface IProjectProps {
   project: IProject;
@@ -16,10 +16,6 @@ interface IProjectProps {
 type ItemColumn = Record<number, { name: string; items: ITask[] }>;
 
 export const Project: FC<IProjectProps> = ({ project }) => {
-  const [projectTasks, setTaskList] = useState<ITask[]>([]);
-  const [backPath, setBackPath] = useState<string>(' ');
-  const [projectItemId, setProjectItemId] = useState<number>(0);
-  const { pathname } = useLocation();
   const { tasks } = useTypedSelector((state) => state.tasks);
   const [tasksStatusSort, setTasksStatusSort] = useState<ITasksStatusSort>({
     developmentTaskList: [],
@@ -30,48 +26,35 @@ export const Project: FC<IProjectProps> = ({ project }) => {
 
   useEffect(() => {
     const currentProjectTasks = project.tasks.map((taskId) => tasks[taskId]);
-    setTaskList(currentProjectTasks);
 
-    !backPath && setBackPath(pathname.split('/').splice(-1, 1).toString());
-  }, [tasks]);
-
-  useEffect(() => {
-    const developmentTaskList = projectTasks.filter(
+    const developmentTaskList = currentProjectTasks.filter(
       (task) => task.status === TaskStatus.DEVELOPMENT
     );
-    const doneTaskList = projectTasks.filter((task) => task.status === TaskStatus.DONE);
-    const queueTaskList = projectTasks.filter((task) => task.status === TaskStatus.QUEUE);
+    const doneTaskList = currentProjectTasks.filter((task) => task.status === TaskStatus.DONE);
+    const queueTaskList = currentProjectTasks.filter((task) => task.status === TaskStatus.QUEUE);
 
     setTasksStatusSort({
       developmentTaskList,
       doneTaskList,
       queueTaskList
     });
-  }, [projectTasks]);
 
-  useEffect(() => {
     const columnsObj = {
       '1': {
         name: TaskStatus.QUEUE,
-        items: tasksStatusSort.queueTaskList
+        items: queueTaskList
       },
       '2': {
         name: TaskStatus.DEVELOPMENT,
-        items: tasksStatusSort.developmentTaskList
+        items: developmentTaskList
       },
       '3': {
         name: TaskStatus.DONE,
-        items: tasksStatusSort.doneTaskList
+        items: doneTaskList
       }
     };
     setColumns(columnsObj);
-  }, [
-    tasksStatusSort.developmentTaskList,
-    tasksStatusSort.doneTaskList,
-    tasksStatusSort.queueTaskList.length,
-    tasks,
-    tasksStatusSort
-  ]);
+  }, [tasks]);
 
   if (!columns) {
     return (
@@ -82,13 +65,9 @@ export const Project: FC<IProjectProps> = ({ project }) => {
   } else {
     return (
       <div className={'project'}>
-        <NavLink to={`/${backPath}`} className="goBackButton">
-          go back
-        </NavLink>
+        <GoBack />
 
-        <h1>Project name: {'123'}</h1>
-        <p>task list:</p>
-
+        <h1>Project name: {project.name}</h1>
         <TaskList setColumns={setColumns} columns={columns} tasksStatusSort={tasksStatusSort} />
       </div>
     );
