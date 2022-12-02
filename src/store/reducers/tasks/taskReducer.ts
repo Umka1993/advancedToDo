@@ -3,7 +3,7 @@ import {
   ITasksState,
   TaskActionEnum,
   taskPriorityEnum,
-  TaskStatus
+  TaskStatus,
 } from './taskTypes';
 
 const initialState: ITasksState = {
@@ -21,22 +21,9 @@ const initialState: ITasksState = {
       isCanAddSubTask: true,
       priority: taskPriorityEnum.STANDARD,
       readyDate: '02.01.22',
-      subTasks: [1, 2]
-    }
-    // 2: {
-    //   name: 'to sleep',
-    //   id: 2,
-    //   status: TaskStatus.QUEUE,
-    //   comments: [3, 4],
-    //   createDate: '01.12.22',
-    //   description: 'just do it',
-    //   files: [],
-    //   inProgressTime: '00.20',
-    //   isCanAddTask: true,
-    //   priority: 'standard',
-    //   readyDate: '02.01.22',
-    // },
-  }
+      subTasks: [1, 2],
+    },
+  },
 };
 
 export const taskReducer = (state = initialState, action: ITaskAction): ITasksState => {
@@ -46,7 +33,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const newTask = {
         ...state.tasks,
-        [id]: action.payload
+        [id]: action.payload,
       };
 
       console.log(newTask);
@@ -57,7 +44,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const copyTasks = {
         ...state.tasks,
-        [id]: action.payload
+        [id]: action.payload,
       };
 
       return { ...state, tasks: copyTasks };

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './addTaskForm.scss';
 import loadPhoto from '../../../assets/icons/loadPhoto.png';
 import classNames from 'classnames';
@@ -19,9 +19,10 @@ import { useLocation } from 'react-router-dom';
 interface IForm {
   close: () => void;
   status: TaskStatus.DONE | TaskStatus.DEVELOPMENT | TaskStatus.QUEUE;
+  taskId: number;
 }
 
-export const AddTaskForm: FC<IForm> = ({ close, status }) => {
+export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
   const [image, setImage] = useState<File>();
   const [picture, setPicture] = useState<string | Blob>('');
   const [preview, setPreview] = useState<string | null>();
@@ -35,6 +36,7 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
   const [readyDate, setReadyDate] = useState('');
   const [newTask, setNewTask] = useState<ITask>();
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
+  const [taskEditedId, setTaskEditedId] = useState<number>();
   const { tasks } = useTypedSelector((state) => state.tasks);
 
   const { pathname } = useLocation();
@@ -42,6 +44,19 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
   const projectId = Number(pathname.split('/').pop());
 
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const { name, id, priority, files, description, readyDate } = tasks[taskId];
+  //
+  //   if (priority && files && description && readyDate) {
+  //     setName(name);
+  //     setTaskEditedId(id);
+  //     setPriority(priority);
+  //     setPicture(files);
+  //     setDescription(description);
+  //     setReadyDate(readyDate);
+  //   }
+  // }, [taskId]);
 
   useEffect(() => {
     setNewStatus(status);
@@ -94,13 +109,8 @@ export const AddTaskForm: FC<IForm> = ({ close, status }) => {
     setReadyDate('');
   };
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   const addNewTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(formRef.current as HTMLFormElement);
-
-    console.log(formData);
 
     const newTask: ITask = {
       description,

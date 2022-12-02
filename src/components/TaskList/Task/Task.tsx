@@ -4,6 +4,8 @@ import { ITask } from '../../../store/reducers/tasks/taskTypes';
 import './task.scss';
 import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
+import { AddTaskForm } from '../AddTaskForm/AddTaskForm';
+import { Modal } from '../../../Dialog/Modal';
 
 type ITaskPropsExtended = DraggableStateSnapshot & DraggableProvided & ITask;
 
@@ -18,8 +20,10 @@ export const Task: FC<ITaskProps> = ({
   dragHandleProps,
   ...snapshot
 }) => {
-  const [editTask, setEditTask] = useState<number>();
+  const [isOpen, setIsOpen] = useState(false);
   const [isAddSubtask, setIsAddSubtask] = useState(false);
+
+  const Toggle = () => setIsOpen(!isOpen);
 
   return (
     <div
@@ -29,13 +33,14 @@ export const Task: FC<ITaskProps> = ({
       {...dragHandleProps}
       style={{
         backgroundColor: snapshot.isDragging ? '#263B4A' : '#c0bdbd',
-        ...draggableProps.style
-      }}>
+        ...draggableProps.style,
+      }}
+    >
       <div className="task__headline">
         <span>{task.id}</span>
         <span>{task.name}</span>
 
-        <button onClick={() => setEditTask(task.id)} className={'edit'}>
+        <button onClick={() => setIsOpen(true)} className={'edit'}>
           <Edit />
         </button>
       </div>
@@ -102,6 +107,10 @@ export const Task: FC<ITaskProps> = ({
           <button>+ subtask</button>
         </div>
       </div>
+
+      <Modal show={isOpen} close={Toggle}>
+        <AddTaskForm taskId={task.id} status={task.status} close={Toggle} />
+      </Modal>
     </div>
   );
 };
