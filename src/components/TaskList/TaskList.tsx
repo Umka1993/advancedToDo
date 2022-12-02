@@ -15,7 +15,7 @@ import { ITasksStatusSort } from '../../types/types';
 import { ReactComponent as AddTask } from '../../assets/icons/add-svgrepo-com.svg';
 import { Task } from './Task/Task';
 import { Modal } from '../../Dialog/Modal';
-import { AddTaskForm } from './AddTaskForm/AddTaskForm';
+import { TaskForm } from './taskForm/TaskForm';
 
 interface ITaskList {
   tasksStatusSort: ITasksStatusSort;
@@ -186,7 +186,7 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
       </div>
 
       <Modal show={isOpen} close={Toggle}>
-        <AddTaskForm taskId={1} status={status} close={Toggle} />
+        <TaskForm close={Toggle} />
       </Modal>
     </div>
   );

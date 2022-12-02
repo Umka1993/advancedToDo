@@ -4,8 +4,6 @@ import { ITask } from '../../../store/reducers/tasks/taskTypes';
 import './task.scss';
 import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
-import { AddTaskForm } from '../AddTaskForm/AddTaskForm';
-import { Modal } from '../../../Dialog/Modal';
 
 type ITaskPropsExtended = DraggableStateSnapshot & DraggableProvided & ITask;
 
@@ -108,9 +106,9 @@ export const Task: FC<ITaskProps> = ({
         </div>
       </div>
 
-      <Modal show={isOpen} close={Toggle}>
-        <AddTaskForm taskId={task.id} status={task.status} close={Toggle} />
-      </Modal>
+      {/* <Modal show={isOpen} close={Toggle}> */}
+      {/*  <TaskForm taskId={task.id} close={Toggle} /> */}
+      {/* </Modal> */}
     </div>
   );
 };

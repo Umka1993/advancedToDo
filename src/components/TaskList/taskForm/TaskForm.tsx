@@ -1,13 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
-import './addTaskForm.scss';
-import loadPhoto from '../../../assets/icons/loadPhoto.png';
-import classNames from 'classnames';
+import './taskForm.scss';
 import {
   ITask,
   ITaskAction,
   TaskActionEnum,
   taskPriority,
   taskPriorityEnum,
+  taskStatus,
   TaskStatus,
 } from '../../../store/reducers/tasks/taskTypes';
 import { useDispatch } from 'react-redux';
@@ -15,52 +14,52 @@ import { Dispatch } from 'redux';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 import { IProjectAction, ProjectActionEnum } from '../../../store/reducers/projects/projectTypes';
 import { useLocation } from 'react-router-dom';
+import { Input } from '../ui/Input/Input';
+import { Textarea } from '../ui/Textarea/Textarea';
+import classNames from 'classnames';
+import loadPhoto from '../../../assets/icons/loadPhoto.png';
 
 interface IForm {
   close: () => void;
-  status: TaskStatus.DONE | TaskStatus.DEVELOPMENT | TaskStatus.QUEUE;
-  taskId: number;
+  taskId?: number;
 }
 
-export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
-  const [image, setImage] = useState<File>();
+export const TaskForm: FC<IForm> = ({ close, taskId }) => {
+  const { tasks } = useTypedSelector((state) => state.tasks);
+
+  const [images, setImages] = useState<FileList>();
   const [picture, setPicture] = useState<string | Blob>('');
-  const [preview, setPreview] = useState<string | null>();
+  const [preview, setPreview] = useState<string[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
-  const [newStatus, setNewStatus] = useState<
-    TaskStatus.DONE | TaskStatus.DEVELOPMENT | TaskStatus.QUEUE
-  >(status);
+  const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
   const [createDate, setCreateDate] = useState('');
   const [readyDate, setReadyDate] = useState('');
   const [newTask, setNewTask] = useState<ITask>();
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
-  const [taskEditedId, setTaskEditedId] = useState<number>();
-  const { tasks } = useTypedSelector((state) => state.tasks);
+
+  console.log('render');
 
   const { pathname } = useLocation();
-
-  const projectId = Number(pathname.split('/').pop());
 
   const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   const { name, id, priority, files, description, readyDate } = tasks[taskId];
+  //   if (taskId) {
+  //     const { priority, name, createDate, isCanAddSubTask, files, description, readyDate, status } =
+  //       tasks[taskId];
   //
-  //   if (priority && files && description && readyDate) {
+  //     setIsCanAddSubTask(isCanAddSubTask);
+  //     setCreateDate(createDate);
   //     setName(name);
-  //     setTaskEditedId(id);
-  //     setPriority(priority);
-  //     setPicture(files);
   //     setDescription(description);
-  //     setReadyDate(readyDate);
+  //     setPriority(priority);
+  //     setNewStatus(status);
+  //     readyDate && setReadyDate(readyDate);
+  //     files && setPicture(files);
   //   }
   // }, [taskId]);
-
-  useEffect(() => {
-    setNewStatus(status);
-  }, [status]);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('de-DE');
@@ -72,46 +71,38 @@ export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
     dispatch({ type: TaskActionEnum.ADD_TASK, payload: task });
   };
   const dispatchNewTaskToProject = (dispatch: Dispatch<IProjectAction>, task: ITask) => {
+    const projectId = Number(pathname.split('/').pop());
     dispatch({ type: ProjectActionEnum.ADD_NEWTASK_TOPROJECT, payload: { projectId, ...task } });
   };
 
   useEffect(() => {
+    // if (taskId) {
+    //   console.log('dispatch edit task');
+    // } else {
     newTask && dispatchNewTask(dispatch, newTask);
     newTask && dispatchNewTaskToProject(dispatch, newTask);
+    // }
   }, [newTask]);
 
-  useEffect(() => {
-    if (image != null) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setPreview(result);
-      };
-      reader.readAsDataURL(image);
-    } else {
-      setPreview(null);
-    }
-  }, [image]);
-
-  const getFile = (file: File): void => {
+  const getFile = (file: FileList): void => {
     if (file) {
-      setImage(file);
-      setPicture(file);
+      const newPreview = Object.values(file).map((img) => URL.createObjectURL(img));
+      setPreview([...preview, ...newPreview]);
     }
   };
 
   const resetForm = () => {
     setDescription('');
-    setNewStatus(status);
+    setNewStatus(TaskStatus.QUEUE);
     setPicture('');
     setPriority(taskPriorityEnum.STANDARD);
     setName('');
     setReadyDate('');
+    setPreview([]);
   };
 
   const addNewTask = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const newTask: ITask = {
       description,
       status: newStatus,
@@ -123,32 +114,36 @@ export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
       createDate,
       readyDate,
     };
+
     setNewTask(newTask);
     resetForm();
 
     setTimeout(() => close(), 400);
   };
-
+  console.log('preview', preview);
   return (
-    <div className={'AddTaskForm'}>
+    <div className={'taskForm'}>
       <form onSubmit={(e) => addNewTask(e)}>
-        <label htmlFor="name">Task Name</label>
-        <input
-          type="text"
+        <Input
+          seStateValue={setName}
+          type={'text'}
           id={'name'}
           name={'name'}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          stateValue={name}
           required={true}
+          label={'Task Name'}
         />
-        <label htmlFor="description">Task description</label>
-        <textarea
+
+        <Textarea
+          seStateValue={setDescription}
+          type={'text'}
           id={'description'}
           name={'description'}
-          value={description}
-          readOnly={false}
-          onChange={(e) => setDescription(e.target.value)}
+          stateValue={description}
+          required={false}
+          label={'Task description'}
         />
+
         <label htmlFor="patronymic">Priority</label>
         <select
           id={'priority'}
@@ -166,7 +161,6 @@ export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
           id={'status'}
           name={'status'}
           value={newStatus}
-          // defaultValue={status}
           onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
         >
           <option value="QUEUE">QUEUE</option>
@@ -175,32 +169,22 @@ export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
         </select>
 
         <label htmlFor="createDate">Create date</label>
-        {''.length ? (
-          <input
-            type="date"
-            id={'createDate'}
-            name={'createDate'}
-            value={'01.12.22'}
-            onChange={(e) => setCreateDate(e.target.value)}
-          />
-        ) : (
-          <input
-            id={'createDate'}
-            name={'createDate'}
-            readOnly={true}
-            type={'text'}
-            value={createDate}
-          />
-        )}
-
-        <label htmlFor="readyDate">Ready date:</label>
         <input
-          type="date"
+          id={'createDate'}
+          name={'createDate'}
+          readOnly={true}
+          type={'text'}
+          value={createDate}
+        />
+
+        <Input
+          seStateValue={setReadyDate}
+          type={'date'}
           id={'readyDate'}
           name={'readyDate'}
-          value={readyDate}
-          min={createDate}
-          onChange={(e) => setReadyDate(e.target.value)}
+          stateValue={readyDate}
+          required={false}
+          label={'Ready date:'}
         />
 
         <div className="manageSubtasks">
@@ -215,49 +199,49 @@ export const AddTaskForm: FC<IForm> = ({ close, status, taskId }) => {
           </label>
         </div>
 
-        <label className={'labelPhoto'} htmlFor="photo">
-          Фото
-          <div
-            className={classNames('photoBlock', {
-              photoBlockPreview: preview,
-            })}
-            style={
-              preview != null
-                ? {
-                    backgroundImage: `url(${preview})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                  }
-                : {}
-            }
-          >
+        <div className="photoField">
+          <label className={'labelPhoto'} htmlFor="photo">
+            Фото
             <img src={loadPhoto} alt="loadPhoto" />
+            <input
+              type="file"
+              id={'photo'}
+              name={'photo'}
+              accept="image/png, image/gif, image/jpeg"
+              multiple={true}
+              onChange={(event) => {
+                const target = event.target as HTMLInputElement;
+                const file: FileList = target.files as FileList;
+
+                getFile(file);
+              }}
+            />
+          </label>
+
+          <div className="photoCollection">
+            {preview?.map((img, index) => (
+              <div
+                key={index}
+                className={classNames('photoBlock', { photoBlockPreview: img })}
+                style={
+                  preview != null
+                    ? {
+                        backgroundImage: `url(${img})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                      }
+                    : {}
+                }
+              ></div>
+            ))}
           </div>
-          <input
-            type="file"
-            id={'photo'}
-            name={'photo'}
-            accept="image/png, image/gif, image/jpeg"
-            multiple={true}
-            onChange={(event) => {
-              const target = event.target as HTMLInputElement;
-              const file: File = (target.files as FileList)[0];
-              getFile(file);
-            }}
-          />
-        </label>
-        {/* <div className={'buttonWrap'}> */}
-        {/*  <button className={'addButton'} type={'submit'}> */}
-        {/*    <span> Add Task</span> */}
-        {/*  </button> */}
-        {/*  <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" height="62" width="62" /> */}
-        {/* </div> */}
+        </div>
 
         <div className="submitButton">
           <div className="buttonWrap">
             <button type={'submit'} className="btn addButton">
-              <span>Submit</span>
+              <span>{taskId ? 'Edit task' : 'Add task'}</span>
               <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" height="62" width="62" />
             </button>
           </div>

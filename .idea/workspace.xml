@@ -4,13 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="fix problem with node-sass">
+    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="add feature edit task">
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/ui/Input/Input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput/LoadPhotoInput.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TaskList/ui/Textarea/Textarea.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/taskForm/TaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/addTaskForm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/taskForm/taskForm.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/task.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/Task/task.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useOnClickOutside.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +27,8 @@
       <list>
         <option value="Sass File" />
         <option value="TypeScript File" />
-        <option value="TypeScript JSX File" />
         <option value="SCSS File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -42,30 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "last_opened_file_path": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/src/assets/icons",
-    "list.type.of.created.stylesheet": "SCSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.stylelint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/src/assets/icons&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/ivan/Desktop/LEARN/TODOlist/TodoApp/advanced-todo-app/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/icons" />
@@ -124,7 +129,9 @@
       <workItem from="1669385397778" duration="704000" />
       <workItem from="1669386105455" duration="70166000" />
       <workItem from="1669717976625" duration="46736000" />
-      <workItem from="1669810371649" duration="91762000" />
+      <workItem from="1669810371649" duration="105361000" />
+      <workItem from="1670010216187" duration="618000" />
+      <workItem from="1670010895206" duration="10111000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <created>1669382310535</created>
@@ -175,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669992373754</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add feature edit task">
+      <created>1669996618702</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1669996618702</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +227,7 @@
     <MESSAGE value="refactoring &#10;  --add projectsReducer.ts&#10;  --edit taskReducer.ts&#10;  --edit TaskList.tsx" />
     <MESSAGE value="add modal form&#10;+ feature add task to project" />
     <MESSAGE value="fix problem with node-sass" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix problem with node-sass" />
+    <MESSAGE value="add feature edit task" />
+    <option name="LAST_COMMIT_MESSAGE" value="add feature edit task" />
   </component>
 </project>

@@ -2,11 +2,11 @@ export interface ITask {
   id: number;
   name: string;
   status: taskStatus;
-  description?: string;
+  description: string;
   createDate: string;
   inProgressTime?: string;
   readyDate?: string;
-  priority?: taskPriority;
+  priority: taskPriority;
   files?: Blob | string;
   isCanAddSubTask: boolean;
   comments?: number[];
@@ -15,9 +15,10 @@ export interface ITask {
 
 export type taskStatus = TaskStatus.DEVELOPMENT | TaskStatus.DONE | TaskStatus.QUEUE;
 export type taskPriority = taskPriorityEnum.HEIGHT | taskPriorityEnum.STANDARD;
+
 export enum taskPriorityEnum {
   STANDARD = 'standard',
-  HEIGHT = 'height'
+  HEIGHT = 'height',
 }
 
 export type tasksItem = Record<number, ITask>;
@@ -29,12 +30,12 @@ export interface ITasksState {
 export enum TaskStatus {
   QUEUE = 'QUEUE',
   DEVELOPMENT = 'DEVELOPMENT',
-  DONE = 'DONE'
+  DONE = 'DONE',
 }
 export enum TaskActionEnum {
   ADD_TASK = 'ADD_TASK',
   EDIT_TASK = 'EDIT_TASK',
-  DELETE_TASK = 'DELETE_TASK'
+  DELETE_TASK = 'DELETE_TASK',
 }
 
 export type ITaskAction = IAddTaskAction | IEditTaskAction | IDeleteTaskAction;

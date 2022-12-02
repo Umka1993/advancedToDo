@@ -35,8 +35,8 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
         ...state.tasks,
         [id]: action.payload,
       };
+      console.log('reducer');
 
-      console.log(newTask);
       return { ...state, tasks: newTask };
     }
     case TaskActionEnum.EDIT_TASK: {
