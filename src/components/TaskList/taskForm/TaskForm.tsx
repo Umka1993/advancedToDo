@@ -7,7 +7,7 @@ import {
   taskPriority,
   taskPriorityEnum,
   taskStatus,
-  TaskStatus,
+  TaskStatus
 } from '../../../store/reducers/tasks/taskTypes';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -16,20 +16,24 @@ import { IProjectAction, ProjectActionEnum } from '../../../store/reducers/proje
 import { useLocation } from 'react-router-dom';
 import { Input } from '../ui/Input/Input';
 import { Textarea } from '../ui/Textarea/Textarea';
-import classNames from 'classnames';
-import loadPhoto from '../../../assets/icons/loadPhoto.png';
+import { LoadPhotoInput } from '../ui/LoadPhotoInput/LoadPhotoInput';
 
 interface IForm {
   close: () => void;
   taskId?: number;
 }
 
+export interface previewType {
+  name: string;
+  preview: string;
+}
+
 export const TaskForm: FC<IForm> = ({ close, taskId }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
 
-  const [images, setImages] = useState<FileList>();
   const [picture, setPicture] = useState<string | Blob>('');
-  const [preview, setPreview] = useState<string[]>([]);
+  const [preview, setPreview] = useState<previewType[]>([]);
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
@@ -84,13 +88,6 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
     // }
   }, [newTask]);
 
-  const getFile = (file: FileList): void => {
-    if (file) {
-      const newPreview = Object.values(file).map((img) => URL.createObjectURL(img));
-      setPreview([...preview, ...newPreview]);
-    }
-  };
-
   const resetForm = () => {
     setDescription('');
     setNewStatus(TaskStatus.QUEUE);
@@ -112,7 +109,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
       isCanAddSubTask: true,
       id: ++Object.keys(tasks).length,
       createDate,
-      readyDate,
+      readyDate
     };
 
     setNewTask(newTask);
@@ -120,7 +117,6 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
 
     setTimeout(() => close(), 400);
   };
-  console.log('preview', preview);
   return (
     <div className={'taskForm'}>
       <form onSubmit={(e) => addNewTask(e)}>
@@ -150,8 +146,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           name={'priority'}
           value={priority}
           onChange={(e) => setPriority(e.target.value as taskPriority)}
-          placeholder={'Select priority:'}
-        >
+          placeholder={'Select priority:'}>
           <option value="1">standard</option>
           <option value="2">height</option>
         </select>
@@ -161,8 +156,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           id={'status'}
           name={'status'}
           value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
-        >
+          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}>
           <option value="QUEUE">QUEUE</option>
           <option value="DEVELOPMENT">DEVELOPMENT</option>
           <option value="DONE">DONE</option>
@@ -199,44 +193,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           </label>
         </div>
 
-        <div className="photoField">
-          <label className={'labelPhoto'} htmlFor="photo">
-            Фото
-            <img src={loadPhoto} alt="loadPhoto" />
-            <input
-              type="file"
-              id={'photo'}
-              name={'photo'}
-              accept="image/png, image/gif, image/jpeg"
-              multiple={true}
-              onChange={(event) => {
-                const target = event.target as HTMLInputElement;
-                const file: FileList = target.files as FileList;
-
-                getFile(file);
-              }}
-            />
-          </label>
-
-          <div className="photoCollection">
-            {preview?.map((img, index) => (
-              <div
-                key={index}
-                className={classNames('photoBlock', { photoBlockPreview: img })}
-                style={
-                  preview != null
-                    ? {
-                        backgroundImage: `url(${img})`,
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat',
-                      }
-                    : {}
-                }
-              ></div>
-            ))}
-          </div>
-        </div>
+        <LoadPhotoInput stateValue={preview} seStateValue={setPreview} />
 
         <div className="submitButton">
           <div className="buttonWrap">

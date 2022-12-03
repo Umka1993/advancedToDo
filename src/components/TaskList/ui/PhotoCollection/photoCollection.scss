@@ -1,0 +1,47 @@
+.photoCollection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  overflow: auto;
+  scrollbar-gutter: stable both-edges;
+  white-space: nowrap;
+  //width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collectionItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+
+    .photoBlock {
+      display: inline-block;
+
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .photoBlockPreview {
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    span {
+      font-size: 10px;
+    }
+  }
+}

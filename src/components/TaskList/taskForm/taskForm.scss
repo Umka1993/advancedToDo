@@ -110,65 +110,6 @@
       }
     }
 
-    .photoField {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      margin-top: 10px;
-
-      .labelPhoto {
-        margin-top: 0;
-        margin-right: 10px;
-        width: 70px;
-        height: 70px;
-        margin-bottom: 6px;
-      }
-
-      label > [type='file'] {
-        width: 65px;
-        height: 65px;
-        position: absolute;
-        top: 23px;
-        left: 10px;
-        z-index: -99;
-        font-size: 0;
-        opacity: 0;
-      }
-
-      .photoCollection {
-        //display: flex;
-        //justify-content: flex-start;
-        //align-items: flex-end;
-        //flex-wrap: wrap;
-        overflow: auto;
-        scrollbar-gutter: stable both-edges;
-        white-space: nowrap;
-        //width: 100%;
-        .photoBlock {
-          //display: flex;
-          //justify-content: center;
-          //align-items: center;
-          display: inline-block;
-
-          width: 50px;
-          height: 50px;
-          background-color: rgba(118, 118, 128, 0.24);
-          border-radius: 10px;
-          img {
-            width: 50px;
-            height: 50px;
-          }
-        }
-
-        .photoBlockPreview {
-          background-position: center;
-          background-size: cover;
-          background-repeat: no-repeat;
-          margin-right: 5px;
-        }
-      }
-    }
-
     .submitButton {
       display: flex;
       width: 100%;

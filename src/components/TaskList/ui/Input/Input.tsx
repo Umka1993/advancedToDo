@@ -14,7 +14,7 @@ export const Input: FC<IInput> = ({
   required,
   name,
 
-  type,
+  type
 }) => {
   const [localState, setLocalState] = useState(stateValue);
 

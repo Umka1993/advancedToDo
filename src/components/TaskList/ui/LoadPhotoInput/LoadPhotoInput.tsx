@@ -1,55 +1,51 @@
 import React, { FC, useState } from 'react';
-import classNames from 'classnames';
+import { previewType } from '../../taskForm/TaskForm';
+import './loadPhotoInput.scss';
+
 import loadPhoto from '../../../../assets/icons/loadPhoto.png';
+import { PhotoCollection } from '../PhotoCollection/PhotoCollection';
 
 interface ILoadPhotoInput {
-  preview: string;
-  stateValue: File;
-  seStateValue: (arg: File) => void;
+  stateValue: previewType[];
+  seStateValue: (arg: previewType[]) => void;
 }
 
-export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ preview, stateValue, seStateValue }) => {
-  const [localState, setLocalState] = useState<File>(stateValue);
+export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }) => {
+  const [localState, setLocalState] = useState<previewType[]>(stateValue);
 
-  const getFile = (file: File): void => {
-    if (file) {
-      setLocalState(file);
-    }
+  const getFile = (file: FileList): void => {
+    const newPreview: previewType[] = [];
+    Object.values(file).forEach((item) => {
+      const newItem: previewType = {
+        name: item.name,
+        preview: URL.createObjectURL(item)
+      };
+
+      newPreview.push(newItem);
+    });
+    setLocalState([...stateValue, ...newPreview]);
   };
+
   return (
-    <>
-      <label onBlur={() => seStateValue(localState)} className={'labelPhoto'} htmlFor="photo">
+    <div onBlur={() => seStateValue(localState)} className="photoField">
+      <label className={'labelPhoto'} htmlFor="photo">
         Фото
-        <div
-          className={classNames('photoBlock', {
-            photoBlockPreview: preview,
-          })}
-          style={
-            preview != null
-              ? {
-                  backgroundImage: `url(${preview})`,
-                  backgroundPosition: 'center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                }
-              : {}
-          }
-        >
-          <img src={loadPhoto} alt="loadPhoto" />
-        </div>
+        <img src={loadPhoto} alt="loadPhoto" />
         <input
           type="file"
           id={'photo'}
           name={'photo'}
-          accept="image/png, image/gif, image/jpeg"
           multiple={true}
           onChange={(event) => {
             const target = event.target as HTMLInputElement;
-            const file: File = (target.files as FileList)[0];
+            const file: FileList = target.files as FileList;
+
             getFile(file);
           }}
         />
       </label>
-    </>
+
+      <PhotoCollection stateValue={localState} />
+    </div>
   );
 };

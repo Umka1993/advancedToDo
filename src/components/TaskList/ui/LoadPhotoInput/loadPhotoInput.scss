@@ -1,0 +1,26 @@
+.photoField {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin-top: 10px;
+  position: relative;
+
+  .labelPhoto {
+    margin-top: 0;
+    margin-right: 10px;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 6px;
+  }
+
+  label > [type='file'] {
+    width: 65px;
+    height: 65px;
+    position: absolute;
+    top: 23px;
+    left: 10px;
+    z-index: -99;
+    font-size: 0;
+    opacity: 0;
+  }
+}

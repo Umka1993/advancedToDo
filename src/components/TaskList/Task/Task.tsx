@@ -31,9 +31,8 @@ export const Task: FC<ITaskProps> = ({
       {...dragHandleProps}
       style={{
         backgroundColor: snapshot.isDragging ? '#263B4A' : '#c0bdbd',
-        ...draggableProps.style,
-      }}
-    >
+        ...draggableProps.style
+      }}>
       <div className="task__headline">
         <span>{task.id}</span>
         <span>{task.name}</span>
