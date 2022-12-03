@@ -9,13 +9,13 @@ import {
   ITaskAction,
   TaskActionEnum,
   TaskStatus,
-  taskStatus
+  taskStatus,
 } from '../../store/reducers/tasks/taskTypes';
 import { ITasksStatusSort } from '../../types/types';
 import { ReactComponent as AddTask } from '../../assets/icons/add-svgrepo-com.svg';
 import { Task } from './Task/Task';
 import { Modal } from '../../Dialog/Modal';
-import { TaskForm } from './taskForm/TaskForm';
+import { AddTaskForm } from './AddTaskForm/AddTaskForm';
 
 interface ITaskList {
   tasksStatusSort: ITasksStatusSort;
@@ -69,7 +69,7 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
         name: foundedTask.name,
         status: destColumn.name,
         createDate: foundedTask.createDate,
-        isCanAddTask: foundedTask.isCanAddSubTask
+        isCanAddTask: foundedTask.isCanAddSubTask,
       };
 
       setEditedTask({ ...foundedTask, ...editedTask });
@@ -94,8 +94,8 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
         ...columns,
         [source.droppableId]: {
           ...column,
-          items: copiedItems
-        }
+          items: copiedItems,
+        },
       });
     }
   };
@@ -121,16 +121,18 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
                   flexDirection: 'column',
                   alignItems: 'center',
                   backgroundColor: 'lightgrey',
-                  borderRadius: '10px'
+                  borderRadius: '10px',
                 }}
-                key={columnId}>
+                key={columnId}
+              >
                 <div className="colum">
                   <div className="colum__headline">
                     <h2>{column.name}</h2>
                     <button
                       disabled={isOpen}
                       className={'addButton'}
-                      onClick={() => addTask(columnId)}>
+                      onClick={() => addTask(columnId)}
+                    >
                       <AddTask className={`${justClickedColum === columnId ? 'justClick' : ''}`} />
                       <span>add task</span>
                     </button>
@@ -144,14 +146,16 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
                             ref={provided.innerRef}
                             className={'scrollBlock__taskTape'}
                             style={{
-                              background: snapshot.isDraggingOver ? 'lightblue' : 'transparent'
-                            }}>
+                              background: snapshot.isDraggingOver ? 'lightblue' : 'transparent',
+                            }}
+                          >
                             {column.items.map((item, index) => {
                               return (
                                 <Draggable
                                   key={item.id}
                                   draggableId={item.id.toString()}
-                                  index={index}>
+                                  index={index}
+                                >
                                   {(provided, snapshot) => {
                                     return (
                                       <Task
@@ -182,7 +186,7 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
       </div>
 
       <Modal show={isOpen} close={Toggle}>
-        <TaskForm close={Toggle} />
+        <AddTaskForm status={status} close={Toggle} />
       </Modal>
     </div>
   );

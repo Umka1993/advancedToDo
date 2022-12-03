@@ -1,87 +1,60 @@
 import React, { FC, useEffect, useState } from 'react';
-import './taskForm.scss';
+import { Input } from '../Input/Input';
+import { Textarea } from '../Textarea/Textarea';
 import {
   ITask,
-  ITaskAction,
   previewType,
-  TaskActionEnum,
   taskPriority,
   taskPriorityEnum,
   taskStatus,
   TaskStatus,
-} from '../../../store/reducers/tasks/taskTypes';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from 'redux';
-import { useTypedSelector } from '../../../hooks/useTypeSelector';
-import { IProjectAction, ProjectActionEnum } from '../../../store/reducers/projects/projectTypes';
-import { useLocation } from 'react-router-dom';
-import { Input } from '../ui/Input/Input';
-import { Textarea } from '../ui/Textarea/Textarea';
-import { LoadPhotoInput } from '../ui/LoadPhotoInput/LoadPhotoInput';
+} from '../../../../store/reducers/tasks/taskTypes';
+import { LoadPhotoInput } from '../LoadPhotoInput/LoadPhotoInput';
+import { useTypedSelector } from '../../../../hooks/useTypeSelector';
+import './taskForm.scss';
 
 interface IForm {
   close: () => void;
   taskId?: number;
+  setData: (arg: ITask) => void;
+  status?: taskStatus;
 }
 
-export const TaskForm: FC<IForm> = ({ close, taskId }) => {
+export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
-
   const [preview, setPreview] = useState<previewType[]>([]);
-
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
   const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
   const [createDate, setCreateDate] = useState('');
   const [readyDate, setReadyDate] = useState('');
-  const [newTask, setNewTask] = useState<ITask>();
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
-
-  console.log('render');
-
-  const { pathname } = useLocation();
-
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (taskId) {
-  //     const { priority, name, createDate, isCanAddSubTask, files, description, readyDate, status } =
-  //       tasks[taskId];
-  //
-  //     setIsCanAddSubTask(isCanAddSubTask);
-  //     setCreateDate(createDate);
-  //     setName(name);
-  //     setDescription(description);
-  //     setPriority(priority);
-  //     setNewStatus(status);
-  //     readyDate && setReadyDate(readyDate);
-  //     files && setPicture(files);
-  //   }
-  // }, [taskId]);
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('de-DE');
-
     setCreateDate(today);
   }, []);
 
-  const dispatchNewTask = (dispatch: Dispatch<ITaskAction>, task: ITask) => {
-    dispatch({ type: TaskActionEnum.ADD_TASK, payload: task });
-  };
-  const dispatchNewTaskToProject = (dispatch: Dispatch<IProjectAction>, task: ITask) => {
-    const projectId = Number(pathname.split('/').pop());
-    dispatch({ type: ProjectActionEnum.ADD_NEWTASK_TOPROJECT, payload: { projectId, ...task } });
-  };
+  useEffect(() => {
+    status && setNewStatus(status);
+  }, [status]);
 
   useEffect(() => {
-    // if (taskId) {
-    //   console.log('dispatch edit task');
-    // } else {
-    newTask && dispatchNewTask(dispatch, newTask);
-    newTask && dispatchNewTaskToProject(dispatch, newTask);
-    // }
-  }, [newTask]);
+    if (taskId) {
+      const { priority, name, createDate, isCanAddSubTask, files, description, readyDate, status } =
+        tasks[taskId];
+
+      setIsCanAddSubTask(isCanAddSubTask);
+      setCreateDate(createDate);
+      setName(name);
+      setDescription(description);
+      setPriority(priority);
+      setNewStatus(status);
+      readyDate && setReadyDate(readyDate);
+      files && setPreview(files);
+    }
+  }, [taskId]);
 
   const resetForm = () => {
     setDescription('');
@@ -107,7 +80,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
       readyDate,
     };
 
-    setNewTask(newTask);
+    setData(newTask);
     resetForm();
 
     setTimeout(() => close(), 400);
@@ -135,7 +108,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           label={'Task description'}
         />
 
-        <label htmlFor="patronymic">Priority</label>
+        <label htmlFor="priority">Priority</label>
         <select
           id={'priority'}
           name={'priority'}

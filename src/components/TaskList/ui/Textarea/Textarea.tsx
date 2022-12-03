@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes, useState } from 'react';
+import React, { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 
 interface ITextarea extends InputHTMLAttributes<any> {
   stateValue: string;
@@ -8,6 +8,9 @@ interface ITextarea extends InputHTMLAttributes<any> {
 
 export const Textarea: FC<ITextarea> = ({ seStateValue, label, stateValue, id, name }) => {
   const [localState, setLocalState] = useState(stateValue);
+  useEffect(() => {
+    setLocalState(stateValue);
+  }, [stateValue]);
 
   return (
     <>

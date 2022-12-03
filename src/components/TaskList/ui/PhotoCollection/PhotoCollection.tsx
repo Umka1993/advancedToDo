@@ -1,60 +1,25 @@
-import React, { FC } from 'react';
-import classNames from 'classnames';
-import filePreview from '../../../../assets/icons/icons8-file-64.png';
+import React, { FC, useEffect, useState } from 'react';
 
 import './photoCollection.scss';
 import { previewType } from '../../../../store/reducers/tasks/taskTypes';
+import { CollectionItem } from '../CollectionItem/CollectionItem';
 
 interface IPhotoCollection {
   stateValue: previewType[];
 }
 
 export const PhotoCollection: FC<IPhotoCollection> = ({ stateValue }) => {
-  function isImage(filename: string) {
-    function getExtension(filename: string) {
-      const parts = filename.split('.');
-      return parts[parts.length - 1];
-    }
+  const [localState, setLocalState] = useState<previewType[]>(stateValue);
 
-    const ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-      case 'jpg':
-      case 'jpeg':
-      case 'gif':
-      case 'bmp':
-      case 'png':
-        return true;
-    }
-    return false;
-  }
-
-  const fileNameSlicer = (name: string) => {
-    let sliced = name.slice(0, 6);
-    if (sliced.length < name.length) {
-      sliced += '...';
-    }
-    return sliced;
-  };
+  useEffect(() => {
+    setLocalState(stateValue);
+  }, [stateValue, localState]);
 
   return (
     <div className="photoCollection">
-      {stateValue?.map((item, index) => (
-        <div key={index} className={'collectionItem'}>
-          <div
-            className={classNames('photoBlock', { photoBlockPreview: item })}
-            style={
-              stateValue != null
-                ? {
-                    backgroundImage: `url(${isImage(item.name) ? item.preview : filePreview})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat',
-                  }
-                : {}
-            }
-          ></div>
-
-          <span>{fileNameSlicer(item.name)}</span>
+      {localState.map((item, index) => (
+        <div key={index}>
+          <CollectionItem index={index} item={item} />
         </div>
       ))}
     </div>

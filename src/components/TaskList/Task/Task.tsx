@@ -5,7 +5,7 @@ import './task.scss';
 import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
 import { PhotoCollection } from '../ui/PhotoCollection/PhotoCollection';
-import { TaskForm } from '../taskForm/TaskForm';
+import { EditTaskForm } from '../EditTaskForm/EditTaskForm';
 import { Modal } from '../../../Dialog/Modal';
 
 type ITaskPropsExtended = DraggableStateSnapshot & DraggableProvided & ITask;
@@ -113,7 +113,7 @@ export const Task: FC<ITaskProps> = ({
       </div>
 
       <Modal show={isOpen} close={Toggle}>
-        <TaskForm taskId={task.id} close={Toggle} />
+        <EditTaskForm taskId={task.id} close={Toggle} />
       </Modal>
     </div>
   );

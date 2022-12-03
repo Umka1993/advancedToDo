@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes, useState } from 'react';
+import React, { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 
 interface IInput extends InputHTMLAttributes<any> {
   stateValue: string;
@@ -14,9 +14,13 @@ export const Input: FC<IInput> = ({
   required,
   name,
 
-  type
+  type,
 }) => {
   const [localState, setLocalState] = useState(stateValue);
+
+  useEffect(() => {
+    setLocalState(stateValue);
+  }, [stateValue]);
 
   return (
     <>
