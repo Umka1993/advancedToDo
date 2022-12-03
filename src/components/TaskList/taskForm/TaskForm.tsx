@@ -3,11 +3,12 @@ import './taskForm.scss';
 import {
   ITask,
   ITaskAction,
+  previewType,
   TaskActionEnum,
   taskPriority,
   taskPriorityEnum,
   taskStatus,
-  TaskStatus
+  TaskStatus,
 } from '../../../store/reducers/tasks/taskTypes';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -23,15 +24,9 @@ interface IForm {
   taskId?: number;
 }
 
-export interface previewType {
-  name: string;
-  preview: string;
-}
-
 export const TaskForm: FC<IForm> = ({ close, taskId }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
 
-  const [picture, setPicture] = useState<string | Blob>('');
   const [preview, setPreview] = useState<previewType[]>([]);
 
   const [name, setName] = useState('');
@@ -91,7 +86,7 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
   const resetForm = () => {
     setDescription('');
     setNewStatus(TaskStatus.QUEUE);
-    setPicture('');
+    setPreview([]);
     setPriority(taskPriorityEnum.STANDARD);
     setName('');
     setReadyDate('');
@@ -103,13 +98,13 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
     const newTask: ITask = {
       description,
       status: newStatus,
-      files: picture || '',
+      files: preview,
       priority,
       name,
       isCanAddSubTask: true,
       id: ++Object.keys(tasks).length,
       createDate,
-      readyDate
+      readyDate,
     };
 
     setNewTask(newTask);
@@ -146,7 +141,8 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           name={'priority'}
           value={priority}
           onChange={(e) => setPriority(e.target.value as taskPriority)}
-          placeholder={'Select priority:'}>
+          placeholder={'Select priority:'}
+        >
           <option value="1">standard</option>
           <option value="2">height</option>
         </select>
@@ -156,7 +152,8 @@ export const TaskForm: FC<IForm> = ({ close, taskId }) => {
           id={'status'}
           name={'status'}
           value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}>
+          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
+        >
           <option value="QUEUE">QUEUE</option>
           <option value="DEVELOPMENT">DEVELOPMENT</option>
           <option value="DONE">DONE</option>

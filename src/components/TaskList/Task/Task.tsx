@@ -4,6 +4,9 @@ import { ITask } from '../../../store/reducers/tasks/taskTypes';
 import './task.scss';
 import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
+import { PhotoCollection } from '../ui/PhotoCollection/PhotoCollection';
+import { TaskForm } from '../taskForm/TaskForm';
+import { Modal } from '../../../Dialog/Modal';
 
 type ITaskPropsExtended = DraggableStateSnapshot & DraggableProvided & ITask;
 
@@ -31,8 +34,9 @@ export const Task: FC<ITaskProps> = ({
       {...dragHandleProps}
       style={{
         backgroundColor: snapshot.isDragging ? '#263B4A' : '#c0bdbd',
-        ...draggableProps.style
-      }}>
+        ...draggableProps.style,
+      }}
+    >
       <div className="task__headline">
         <span>{task.id}</span>
         <span>{task.name}</span>
@@ -78,11 +82,14 @@ export const Task: FC<ITaskProps> = ({
         </div>
 
         <div className="files">
-          {/* {task.files?.length ? ( */}
-          {/*  task.files.map((file) => <img key={file.type} alt={'file'} />) */}
-          {/* ) : ( */}
-          {/*  <span>no files</span> */}
-          {/* )} */}
+          {task.files?.length ? (
+            <>
+              <span className={'files__title'}>Files:</span>
+              <PhotoCollection stateValue={task.files ?? []} />
+            </>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="subtasks">
@@ -105,9 +112,9 @@ export const Task: FC<ITaskProps> = ({
         </div>
       </div>
 
-      {/* <Modal show={isOpen} close={Toggle}> */}
-      {/*  <TaskForm taskId={task.id} close={Toggle} /> */}
-      {/* </Modal> */}
+      <Modal show={isOpen} close={Toggle}>
+        <TaskForm taskId={task.id} close={Toggle} />
+      </Modal>
     </div>
   );
 };

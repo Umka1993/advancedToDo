@@ -3,7 +3,7 @@ import {
   ITasksState,
   TaskActionEnum,
   taskPriorityEnum,
-  TaskStatus
+  TaskStatus,
 } from './taskTypes';
 
 const initialState: ITasksState = {
@@ -16,14 +16,14 @@ const initialState: ITasksState = {
       createDate: '01.12.22',
       description: 'just do it',
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      files: {} as Blob,
+      files: [],
       inProgressTime: '00.20',
       isCanAddSubTask: true,
       priority: taskPriorityEnum.STANDARD,
       readyDate: '02.01.22',
-      subTasks: [1, 2]
-    }
-  }
+      subTasks: [1, 2],
+    },
+  },
 };
 
 export const taskReducer = (state = initialState, action: ITaskAction): ITasksState => {
@@ -33,7 +33,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const newTask = {
         ...state.tasks,
-        [id]: action.payload
+        [id]: action.payload,
       };
       console.log('reducer');
 
@@ -44,7 +44,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const copyTasks = {
         ...state.tasks,
-        [id]: action.payload
+        [id]: action.payload,
       };
 
       return { ...state, tasks: copyTasks };

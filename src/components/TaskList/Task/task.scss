@@ -71,8 +71,10 @@
       }
     }
     .files {
-      color: #9e9696;
-      text-align: right;
+      &__title {
+        color: black;
+        text-align: left;
+      }
     }
 
     .subtasks {

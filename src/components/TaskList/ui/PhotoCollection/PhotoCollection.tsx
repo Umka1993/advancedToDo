@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import filePreview from '../../../../assets/icons/icons8-file-64.png';
-import { previewType } from '../../taskForm/TaskForm';
+
 import './photoCollection.scss';
+import { previewType } from '../../../../store/reducers/tasks/taskTypes';
 
 interface IPhotoCollection {
   stateValue: previewType[];
@@ -47,10 +48,11 @@ export const PhotoCollection: FC<IPhotoCollection> = ({ stateValue }) => {
                     backgroundImage: `url(${isImage(item.name) ? item.preview : filePreview})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    backgroundRepeat: 'no-repeat'
+                    backgroundRepeat: 'no-repeat',
                   }
                 : {}
-            }></div>
+            }
+          ></div>
 
           <span>{fileNameSlicer(item.name)}</span>
         </div>

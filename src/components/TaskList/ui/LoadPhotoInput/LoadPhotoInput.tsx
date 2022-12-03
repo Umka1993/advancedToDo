@@ -1,9 +1,10 @@
 import React, { FC, useState } from 'react';
-import { previewType } from '../../taskForm/TaskForm';
+
 import './loadPhotoInput.scss';
 
 import loadPhoto from '../../../../assets/icons/loadPhoto.png';
 import { PhotoCollection } from '../PhotoCollection/PhotoCollection';
+import { previewType } from '../../../../store/reducers/tasks/taskTypes';
 
 interface ILoadPhotoInput {
   stateValue: previewType[];
@@ -18,7 +19,7 @@ export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }
     Object.values(file).forEach((item) => {
       const newItem: previewType = {
         name: item.name,
-        preview: URL.createObjectURL(item)
+        preview: URL.createObjectURL(item),
       };
 
       newPreview.push(newItem);
