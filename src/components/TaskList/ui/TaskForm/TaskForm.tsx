@@ -11,11 +11,9 @@ import {
 } from '../../../../store/reducers/tasks/taskTypes';
 import { useTypedSelector } from '../../../../hooks/useTypeSelector';
 import './taskForm.scss';
-import loadPhoto from '../../../../assets/icons/loadPhoto.png';
 import '../LoadPhotoInput/loadPhotoInput.scss';
 import '../PhotoCollection/photoCollection.scss';
-import classNames from 'classnames';
-import filePreview from '../../../../assets/icons/icons8-file-64.png';
+import { LoadPhotoInput } from '../LoadPhotoInput/LoadPhotoInput';
 
 interface IForm {
   close: () => void;
@@ -26,7 +24,7 @@ interface IForm {
 
 export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
-  const [preview, setPreview] = useState<previewType[]>([]);
+  const [preview, setPreview] = useState<previewType[]>();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
@@ -34,7 +32,6 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const [createDate, setCreateDate] = useState('');
   const [readyDate, setReadyDate] = useState('');
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
-  // const [taskIdentification, setTaskIdentification] = useState()
 
   useEffect(() => {
     const today = new Date().toLocaleDateString('de-DE');
@@ -46,11 +43,8 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   }, [status]);
 
   useEffect(() => {
-    console.log('1', taskId);
-
     if (taskId) {
-      console.log('2', taskId);
-      const { priority, name, createDate, isCanAddSubTask, files, description, readyDate, status } =
+      const { priority, name, createDate, isCanAddSubTask, description, readyDate, status } =
         tasks[taskId];
 
       setIsCanAddSubTask(isCanAddSubTask);
@@ -60,7 +54,6 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       setPriority(priority);
       setNewStatus(status);
       readyDate && setReadyDate(readyDate);
-      files && setPreview(files);
     }
   }, [taskId]);
 
@@ -79,7 +72,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
     const newTask: ITask = {
       description,
       status: newStatus,
-      files: preview,
+      files: preview ?? [],
       priority,
       name,
       isCanAddSubTask: true,
@@ -94,61 +87,6 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
     setTimeout(() => close(), 400);
     setData(newTask);
   };
-
-  const getFile = (file: FileList): void => {
-    const newPreview: previewType[] = [];
-    Object.values(file).forEach((item) => {
-      const newItem: previewType = {
-        name: item.name,
-        preview: URL.createObjectURL(item),
-      };
-
-      newPreview.push(newItem);
-    });
-
-    setPreview([...preview, ...newPreview]);
-  };
-
-  function isImage(filename: string) {
-    function getExtension(filename: string) {
-      const parts = filename.split('.');
-      return parts[parts.length - 1];
-    }
-
-    const ext = getExtension(filename);
-    switch (ext.toLowerCase()) {
-      case 'jpg':
-      case 'jpeg':
-      case 'gif':
-      case 'bmp':
-      case 'png':
-        return true;
-    }
-    return false;
-  }
-
-  const fileNameSlicer = (name: string) => {
-    let sliced = name.slice(0, 6);
-    if (sliced.length < name.length) {
-      sliced += '...';
-    }
-    return sliced;
-  };
-
-  // useEffect(() => {
-  //   if (image != null) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const result = reader.result as string;
-  //       setPreview(result);
-  //     };
-  //     reader.readAsDataURL(image);
-  //   } else {
-  //     setPreview(null);
-  //   }
-  // }, [image]);
-
-  preview.map((i) => console.log(i));
 
   return (
     <div className={'taskForm'}>
@@ -227,53 +165,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
             <span className="slider round"></span>
           </label>
         </div>
-
-        <div className="photoField">
-          <label className={'labelPhoto'} htmlFor="photo">
-            Фото
-            <img src={loadPhoto} alt="loadPhoto" />
-            <input
-              type="file"
-              id={'photo'}
-              name={'photo'}
-              multiple={true}
-              onChange={(event) => {
-                const target = event.target as HTMLInputElement;
-                const file: FileList = target.files as FileList;
-
-                getFile(file);
-              }}
-            />
-          </label>
-
-          {/* <PhotoCollection stateValue={localState} /> */}
-
-          <div className="photoCollection">
-            {preview.map((item, index) => (
-              <div key={index} className={'collectionItem'}>
-                <div
-                  className={classNames('photoBlock', { photoBlockPreview: true })}
-                  style={
-                    item.preview != null
-                      ? {
-                          backgroundImage: `url(${
-                            isImage(item.name) ? item.preview : filePreview
-                          })`,
-                          backgroundPosition: 'center',
-                          backgroundSize: 'cover',
-                          backgroundRepeat: 'no-repeat',
-                        }
-                      : {}
-                  }
-                ></div>
-
-                <span>{fileNameSlicer(item.name)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* <LoadPhotoInput stateValue={preview} seStateValue={setPreview} /> */}
+        <LoadPhotoInput taskId={taskId} setStateValue={setPreview} />
 
         <div className="submitButton">
           <div className="buttonWrap">

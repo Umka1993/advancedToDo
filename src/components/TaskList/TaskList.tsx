@@ -7,6 +7,7 @@ import { useTypedSelector } from '../../hooks/useTypeSelector';
 import {
   ITask,
   ITaskAction,
+  previewType,
   TaskActionEnum,
   TaskStatus,
   taskStatus,
@@ -15,6 +16,7 @@ import { ITasksStatusSort } from '../../types/types';
 import { ReactComponent as AddTask } from '../../assets/icons/add-svgrepo-com.svg';
 import { Task } from './Task/Task';
 import { AddTaskForm } from './AddTaskForm/AddTaskForm';
+import { Modal } from '../Modal/Modal';
 
 interface ITaskList {
   tasksStatusSort: ITasksStatusSort;
@@ -31,6 +33,7 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
   const [justClickedColum, setJustClickOnColum] = useState('');
   const [status, setStatus] = useState<taskStatus>(TaskStatus.QUEUE);
   const [isOpen, setIsOpen] = useState(false);
+  const [preview, setPreview] = useState<previewType[]>([]);
 
   useEffect(() => {
     editedTask && dispatchEditedStatus(dispatch, editedTask);
@@ -72,18 +75,6 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
       };
 
       setEditedTask({ ...foundedTask, ...editedTask });
-
-      // setColumns({
-      //   ...columns,
-      //   [source.droppableId]: {
-      //     ...sourceColumn,
-      //     items: sourceItems,
-      //   },
-      //   [destination.droppableId]: {
-      //     ...destColumn,
-      //     items: destItems,
-      //   },
-      // });
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -183,8 +174,9 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
           })}
         </DragDropContext>
       </div>
-
-      <AddTaskForm isOpen={isOpen} status={status} close={Toggle} />
+      <Modal close={Toggle} show={isOpen}>
+        {isOpen && <AddTaskForm status={status} close={Toggle} />}
+      </Modal>
     </div>
   );
 };

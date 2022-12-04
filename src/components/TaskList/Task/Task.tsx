@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
 import { PhotoCollection } from '../ui/PhotoCollection/PhotoCollection';
 import { EditTaskForm } from '../EditTaskForm/EditTaskForm';
+import { Modal } from '../../Modal/Modal';
 
 type ITaskPropsExtended = DraggableStateSnapshot & DraggableProvided & ITask;
 
@@ -110,7 +111,9 @@ export const Task: FC<ITaskProps> = ({
         </div>
       </div>
 
-      <EditTaskForm isOpen={isOpen} taskId={task.id} close={Toggle} />
+      <Modal close={Toggle} show={isOpen}>
+        {isOpen && <EditTaskForm taskId={task.id} close={Toggle} />}
+      </Modal>
     </div>
   );
 };

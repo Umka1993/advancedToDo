@@ -10,11 +10,6 @@ interface IPhotoCollection {
 }
 
 export const PhotoCollection: FC<IPhotoCollection> = ({ stateValue }) => {
-  console.log('stateValue', stateValue);
-  // useEffect(() => {
-  //   setEditedItem(item);
-  // }, [item]);
-
   function isImage(filename: string) {
     function getExtension(filename: string) {
       const parts = filename.split('.');

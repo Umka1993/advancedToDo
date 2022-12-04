@@ -1,40 +1,42 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import './loadPhotoInput.scss';
 
 import loadPhoto from '../../../../assets/icons/loadPhoto.png';
 import { PhotoCollection } from '../PhotoCollection/PhotoCollection';
 import { previewType } from '../../../../store/reducers/tasks/taskTypes';
+import { useTypedSelector } from '../../../../hooks/useTypeSelector';
 
 interface ILoadPhotoInput {
-  stateValue: previewType[];
-  seStateValue: (arg: previewType[]) => void;
+  taskId?: number;
+  setStateValue: (arg: previewType[]) => void;
 }
 
-export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }) => {
-  const [localState, setLocalState] = useState<previewType[]>(stateValue);
+export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ taskId, setStateValue }) => {
+  const { tasks } = useTypedSelector((state) => state.tasks);
+  const [localState, setLocalState] = useState<previewType[]>([]);
 
-  // useEffect(() => {
-  //   console.log('stateValue', stateValue);
-  //   setLocalState(stateValue);
-  // }, [stateValue]);
+  useEffect(() => {
+    if (taskId) {
+      const { files } = tasks[taskId];
+      setLocalState(files);
+    }
+  }, [taskId]);
 
   const getFile = (file: FileList): void => {
-    const newPreview: previewType[] = [];
+    const newPreview: previewType[] = [...localState];
     Object.values(file).forEach((item) => {
       const newItem: previewType = {
         name: item.name,
         preview: URL.createObjectURL(item),
       };
-
       newPreview.push(newItem);
     });
-
-    setLocalState([...localState, ...newPreview]);
+    setLocalState(newPreview);
   };
 
   return (
-    <div className="photoField">
+    <div onBlur={() => setStateValue(localState)} className="photoField">
       <label className={'labelPhoto'} htmlFor="photo">
         Фото
         <img src={loadPhoto} alt="loadPhoto" />
@@ -51,7 +53,6 @@ export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }
           }}
         />
       </label>
-
       <PhotoCollection stateValue={localState} />
     </div>
   );

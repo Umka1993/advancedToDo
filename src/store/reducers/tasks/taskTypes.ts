@@ -7,7 +7,7 @@ export interface ITask {
   inProgressTime?: string;
   readyDate?: string;
   priority: taskPriority;
-  files?: previewType[];
+  files: previewType[];
   isCanAddSubTask: boolean;
   comments?: number[];
   subTasks?: [1, 2];
