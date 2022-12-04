@@ -24,7 +24,7 @@ interface IForm {
   status?: taskStatus;
 }
 
-export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
+export const ATaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
   const [preview, setPreview] = useState<previewType[]>([]);
   const [name, setName] = useState('');
@@ -135,19 +135,6 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
     return sliced;
   };
 
-  // useEffect(() => {
-  //   if (image != null) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const result = reader.result as string;
-  //       setPreview(result);
-  //     };
-  //     reader.readAsDataURL(image);
-  //   } else {
-  //     setPreview(null);
-  //   }
-  // }, [image]);
-
   preview.map((i) => console.log(i));
 
   return (
@@ -249,8 +236,8 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           {/* <PhotoCollection stateValue={localState} /> */}
 
           <div className="photoCollection">
-            {preview.map((item, index) => (
-              <div key={index} className={'collectionItem'}>
+            {preview.map((item) => (
+              <div key={new Date().getMilliseconds()} className={'collectionItem'}>
                 <div
                   className={classNames('photoBlock', { photoBlockPreview: true })}
                   style={

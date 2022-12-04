@@ -30,17 +30,18 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
   switch (action.type) {
     case TaskActionEnum.ADD_TASK: {
       const { id } = action.payload;
+      console.log('add reducer', action.payload);
 
       const newTask = {
         ...state.tasks,
         [id]: action.payload,
       };
-      console.log('reducer');
 
       return { ...state, tasks: newTask };
     }
     case TaskActionEnum.EDIT_TASK: {
       const { id } = action.payload;
+      console.log('edit reducer', action.payload);
 
       const copyTasks = {
         ...state.tasks,

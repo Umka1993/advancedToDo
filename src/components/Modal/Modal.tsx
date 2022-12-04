@@ -1,7 +1,7 @@
-import ReactDom from 'react-dom';
-import Close from '../assets/icons/icons8-close.svg';
+import Close from '../../assets/icons/icons8-close.svg';
 import './modal.scss';
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, ReactNode } from 'react';
+import classNames from 'classnames';
 
 interface IModal {
   show: boolean;
@@ -10,19 +10,14 @@ interface IModal {
 }
 
 export const Modal: FC<IModal> = ({ show, close, children }) => {
-  const [container] = useState(() => {
-    return document.createElement('div');
-  });
-
-  useEffect(() => {
-    document.body.appendChild(container);
-    return () => {
-      document.body.removeChild(container);
-    };
-  }, []);
-  return ReactDom.createPortal(
+  return (
     <>
-      <div className={`modalContainer ${show ? 'show' : ''} `} onClick={() => close()}>
+      <div
+        className={classNames('modalContainer', {
+          show,
+        })}
+        onClick={() => close()}
+      >
         <div className="modal" onClick={(e) => e.stopPropagation()}>
           <header className="modal_header">
             <button className="close" onClick={() => close()}>
@@ -32,7 +27,6 @@ export const Modal: FC<IModal> = ({ show, close, children }) => {
           <main className="modal_content">{children}</main>
         </div>
       </div>
-    </>,
-    container
+    </>
   );
 };

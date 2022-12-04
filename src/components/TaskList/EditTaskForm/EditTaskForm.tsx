@@ -4,13 +4,15 @@ import { ITask, ITaskAction, TaskActionEnum } from '../../../store/reducers/task
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { TaskForm } from '../ui/TaskForm/TaskForm';
+import { Modal } from '../../Modal/Modal';
 
 interface IEditTaskForm {
   close: () => void;
   taskId: number;
+  isOpen: boolean;
 }
 
-export const EditTaskForm: FC<IEditTaskForm> = ({ close, taskId }) => {
+export const EditTaskForm: FC<IEditTaskForm> = ({ close, taskId, isOpen }) => {
   const [editedTask, setEditedTask] = useState<ITask>();
 
   const dispatch = useDispatch();
@@ -20,8 +22,13 @@ export const EditTaskForm: FC<IEditTaskForm> = ({ close, taskId }) => {
   };
 
   useEffect(() => {
+    console.log('editedTask', editedTask);
     editedTask && dispatchNewTask(dispatch, editedTask);
   }, [editedTask]);
 
-  return <TaskForm close={close} setData={setEditedTask} taskId={taskId} />;
+  return (
+    <Modal show={isOpen} close={close}>
+      <TaskForm close={close} setData={setEditedTask} taskId={taskId} />;
+    </Modal>
+  );
 };

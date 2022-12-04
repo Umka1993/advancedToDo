@@ -14,7 +14,6 @@ import {
 import { ITasksStatusSort } from '../../types/types';
 import { ReactComponent as AddTask } from '../../assets/icons/add-svgrepo-com.svg';
 import { Task } from './Task/Task';
-import { Modal } from '../../Dialog/Modal';
 import { AddTaskForm } from './AddTaskForm/AddTaskForm';
 
 interface ITaskList {
@@ -185,9 +184,7 @@ export const TaskList: FC<ITaskList> = ({ tasksStatusSort, columns, setColumns }
         </DragDropContext>
       </div>
 
-      <Modal show={isOpen} close={Toggle}>
-        <AddTaskForm status={status} close={Toggle} />
-      </Modal>
+      <AddTaskForm isOpen={isOpen} status={status} close={Toggle} />
     </div>
   );
 };

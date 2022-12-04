@@ -10,14 +10,16 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { IProjectAction, ProjectActionEnum } from '../../../store/reducers/projects/projectTypes';
 import { useLocation } from 'react-router-dom';
-import { TaskForm } from '../ui/TaskForm/TaskForm';
+import { Modal } from '../../Modal/Modal';
+import { ATaskForm } from '../ui/TaskForm/ATaskForm';
 
 interface IAddTaskForm {
   close: () => void;
   status: taskStatus;
+  isOpen: boolean;
 }
 
-export const AddTaskForm: FC<IAddTaskForm> = ({ close, status }) => {
+export const AddTaskForm: FC<IAddTaskForm> = ({ close, status, isOpen }) => {
   const [newTask, setNewTask] = useState<ITask>();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -35,5 +37,9 @@ export const AddTaskForm: FC<IAddTaskForm> = ({ close, status }) => {
     newTask && dispatchNewTaskToProject(dispatch, newTask);
   }, [newTask]);
 
-  return <TaskForm close={close} setData={setNewTask} status={status} />;
+  return (
+    <Modal close={close} show={isOpen}>
+      <ATaskForm close={close} setData={setNewTask} status={status} />
+    </Modal>
+  );
 };

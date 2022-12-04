@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import './loadPhotoInput.scss';
 
@@ -14,9 +14,10 @@ interface ILoadPhotoInput {
 export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }) => {
   const [localState, setLocalState] = useState<previewType[]>(stateValue);
 
-  useEffect(() => {
-    setLocalState(stateValue);
-  }, [stateValue]);
+  // useEffect(() => {
+  //   console.log('stateValue', stateValue);
+  //   setLocalState(stateValue);
+  // }, [stateValue]);
 
   const getFile = (file: FileList): void => {
     const newPreview: previewType[] = [];
@@ -33,7 +34,7 @@ export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ stateValue, seStateValue }
   };
 
   return (
-    <div onBlur={() => seStateValue(localState)} className="photoField">
+    <div className="photoField">
       <label className={'labelPhoto'} htmlFor="photo">
         Фото
         <img src={loadPhoto} alt="loadPhoto" />
