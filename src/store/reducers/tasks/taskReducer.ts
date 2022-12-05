@@ -1,10 +1,4 @@
-import {
-  ITaskAction,
-  ITasksState,
-  TaskActionEnum,
-  taskPriorityEnum,
-  TaskStatus,
-} from './taskTypes';
+import { TaskAction, ITasksState, TaskActionEnum, taskPriorityEnum, TaskStatus } from './taskTypes';
 
 const initialState: ITasksState = {
   tasks: {
@@ -21,12 +15,12 @@ const initialState: ITasksState = {
       isCanAddSubTask: true,
       priority: taskPriorityEnum.STANDARD,
       readyDate: '02.01.22',
-      subTasks: [1, 2],
-    },
-  },
+      subTasks: [1, 2]
+    }
+  }
 };
 
-export const taskReducer = (state = initialState, action: ITaskAction): ITasksState => {
+export const taskReducer = (state = initialState, action: TaskAction): ITasksState => {
   switch (action.type) {
     case TaskActionEnum.ADD_TASK: {
       const { id } = action.payload;
@@ -34,7 +28,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const newTask = {
         ...state.tasks,
-        [id]: action.payload,
+        [id]: action.payload
       };
 
       return { ...state, tasks: newTask };
@@ -45,7 +39,7 @@ export const taskReducer = (state = initialState, action: ITaskAction): ITasksSt
 
       const copyTasks = {
         ...state.tasks,
-        [id]: action.payload,
+        [id]: action.payload
       };
 
       return { ...state, tasks: copyTasks };

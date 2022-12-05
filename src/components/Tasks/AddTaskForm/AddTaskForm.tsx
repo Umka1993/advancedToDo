@@ -2,9 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import '../ui/TaskForm/taskForm.scss';
 import {
   ITask,
-  ITaskAction,
+  TaskAction,
   TaskActionEnum,
-  taskStatus,
+  taskStatus
 } from '../../../store/reducers/tasks/taskTypes';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -22,7 +22,7 @@ export const AddTaskForm: FC<IAddTaskForm> = ({ close, status }) => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
-  const dispatchNewTask = (dispatch: Dispatch<ITaskAction>, task: ITask) => {
+  const dispatchNewTask = (dispatch: Dispatch<TaskAction>, task: ITask) => {
     dispatch({ type: TaskActionEnum.ADD_TASK, payload: task });
   };
   const dispatchNewTaskToProject = (dispatch: Dispatch<IProjectAction>, task: ITask) => {
@@ -34,8 +34,6 @@ export const AddTaskForm: FC<IAddTaskForm> = ({ close, status }) => {
     newTask && dispatchNewTask(dispatch, newTask);
     newTask && dispatchNewTaskToProject(dispatch, newTask);
   }, [newTask]);
-
-  console.log('add');
 
   return <TaskForm close={close} setData={setNewTask} status={status} />;
 };

@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import './project.scss';
 import { useTypedSelector } from '../../../hooks/useTypeSelector';
 
-import { TaskList } from '../../TaskList/TaskList';
+import { TaskList } from '../../Tasks/StatusList/TaskList';
 import { ITask, TaskStatus } from '../../../store/reducers/tasks/taskTypes';
 import { IProject } from '../../../store/reducers/projects/projectTypes';
 import { ITasksStatusSort } from '../../../types/types';
@@ -13,7 +13,7 @@ interface IProjectProps {
   project: IProject;
 }
 
-type ItemColumn = Record<number, { name: string; items: ITask[] }>;
+export type ItemColumn = Record<number, { name: string; items: ITask[] }>;
 
 export const Project: FC<IProjectProps> = ({ project }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);

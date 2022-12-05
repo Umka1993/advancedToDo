@@ -4,24 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="bug">
-      <change afterPath="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm/ATaskForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
+    <list default="true" id="c232ba7c-4bf3-4c31-83bd-456acb77ce07" name="Changes" comment="fix bug upload photo">
+      <change afterPath="$PROJECT_DIR$/src/components/Tasks/StatusList/StatusBoard/StatusBoard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Tasks/StatusList/helpers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Tasks/ui/LoadPhotoInput/LoadPhotoInput.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Tasks/ui/LoadPhotoInput/helpers.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hooks/useOutsideClick.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Dialog/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal/Modal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Dialog/modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal/modal.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/EditTaskForm/EditTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/EditTaskForm/EditTaskForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/CollectionItem/CollectionItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/ui/CollectionItem/CollectionItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput/LoadPhotoInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput/LoadPhotoInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/PhotoCollection/PhotoCollection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/ui/PhotoCollection/PhotoCollection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm/TaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm/TaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Modal/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal/Modal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Modal/modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Modal/modal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ProjectList/Project/Project.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProjectList/Project/Project.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/AddTaskForm/AddTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/AddTaskForm/AddTaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/EditTaskForm/EditTaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/EditTaskForm/EditTaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/Task.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/Task/Task.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/Task/task.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/Task/task.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/TaskList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/StatusList/TaskList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/taskList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/StatusList/taskList.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/CollectionItem/CollectionItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/CollectionItem/CollectionItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/Input/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/Input/Input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput/LoadPhotoInput.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput/loadPhotoInput.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/LoadPhotoInput/loadPhotoInput.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/PhotoCollection/PhotoCollection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/PhotoCollection/PhotoCollection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/PhotoCollection/photoCollection.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/PhotoCollection/photoCollection.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm/TaskForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/TaskForm/TaskForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm/taskForm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/TaskForm/taskForm.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TaskList/ui/Textarea/Textarea.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tasks/ui/Textarea/Textarea.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/tasks/taskTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,11 +95,11 @@
       <recent name="$PROJECT_DIR$/src/store/reducers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/Tasks/TasksList" />
+      <recent name="$PROJECT_DIR$/src/components/TaskList/ui/LoadPhotoInput" />
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/components/TaskList/ui/TaskForm" />
       <recent name="$PROJECT_DIR$/src/assets/icons" />
-      <recent name="$PROJECT_DIR$/src/dialog/hooks" />
-      <recent name="$PROJECT_DIR$/src/assets/styles" />
     </key>
   </component>
   <component name="RunManager" selected="npm.start">
@@ -141,7 +150,7 @@
       <workItem from="1670010216187" duration="618000" />
       <workItem from="1670010895206" duration="20223000" />
       <workItem from="1670060023177" duration="23345000" />
-      <workItem from="1670098518707" duration="15750000" />
+      <workItem from="1670098518707" duration="53924000" />
     </task>
     <task id="LOCAL-00001" summary="start project">
       <created>1669382310535</created>
@@ -227,7 +236,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670073129789</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="bug with upload photo">
+      <created>1670138080322</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1670138080322</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix bug upload photo">
+      <created>1670166638988</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1670166638988</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +293,8 @@
     <MESSAGE value="refactoring upload photo" />
     <MESSAGE value="add PhotoCollection.tsx to task" />
     <MESSAGE value="bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug" />
+    <MESSAGE value="bug with upload photo" />
+    <MESSAGE value="fix bug upload photo" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug upload photo" />
   </component>
 </project>

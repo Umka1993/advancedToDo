@@ -1,26 +1,28 @@
 import Close from '../../assets/icons/icons8-close.svg';
 import './modal.scss';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useRef } from 'react';
 import classNames from 'classnames';
+import { useOnClickOutside } from '../../hooks/useOutsideClick';
 
 interface IModal {
   show: boolean;
-  close: () => void;
   children: ReactNode;
+  setIsOpen: (arg: boolean) => void;
 }
 
-export const Modal: FC<IModal> = ({ show, close, children }) => {
+export const Modal: FC<IModal> = ({ show, children, setIsOpen }) => {
+  const modalRef = useRef(null);
+
+  useOnClickOutside(modalRef, () => setIsOpen(false));
   return (
     <>
       <div
         className={classNames('modalContainer', {
-          show,
-        })}
-        onClick={() => close()}
-      >
-        <div className="modal" onClick={(e) => e.stopPropagation()}>
+          show
+        })}>
+        <div ref={modalRef} className="modal" onClick={(e) => e.stopPropagation()}>
           <header className="modal_header">
-            <button className="close" onClick={() => close()}>
+            <button className="close">
               <img src={Close} alt="close" />
             </button>
           </header>

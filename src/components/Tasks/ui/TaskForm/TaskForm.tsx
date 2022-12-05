@@ -3,11 +3,11 @@ import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
 import {
   ITask,
-  previewType,
+  filesType,
   taskPriority,
   taskPriorityEnum,
   taskStatus,
-  TaskStatus,
+  TaskStatus
 } from '../../../../store/reducers/tasks/taskTypes';
 import { useTypedSelector } from '../../../../hooks/useTypeSelector';
 import './taskForm.scss';
@@ -24,19 +24,14 @@ interface IForm {
 
 export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const { tasks } = useTypedSelector((state) => state.tasks);
-  const [preview, setPreview] = useState<previewType[]>();
+  const [localFiles, setLocalFiles] = useState<filesType[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
   const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
-  const [createDate, setCreateDate] = useState('');
+  const [createDate, setCreateDate] = useState(new Date().toLocaleDateString('de-DE'));
   const [readyDate, setReadyDate] = useState('');
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
-
-  useEffect(() => {
-    const today = new Date().toLocaleDateString('de-DE');
-    setCreateDate(today);
-  }, []);
 
   useEffect(() => {
     status && setNewStatus(status);
@@ -44,7 +39,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
 
   useEffect(() => {
     if (taskId) {
-      const { priority, name, createDate, isCanAddSubTask, description, readyDate, status } =
+      const { priority, name, createDate, files, isCanAddSubTask, description, readyDate, status } =
         tasks[taskId];
 
       setIsCanAddSubTask(isCanAddSubTask);
@@ -53,6 +48,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       setDescription(description);
       setPriority(priority);
       setNewStatus(status);
+      setLocalFiles(files);
       readyDate && setReadyDate(readyDate);
     }
   }, [taskId]);
@@ -60,11 +56,10 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const resetForm = () => {
     setDescription('');
     setNewStatus(TaskStatus.QUEUE);
-    setPreview([]);
+    setLocalFiles([]);
     setPriority(taskPriorityEnum.STANDARD);
     setName('');
     setReadyDate('');
-    setPreview([]);
   };
 
   const addNewTask = (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,20 +67,19 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
     const newTask: ITask = {
       description,
       status: newStatus,
-      files: preview ?? [],
+      files: localFiles ?? [],
       priority,
       name,
       isCanAddSubTask: true,
       id: taskId ?? ++Object.keys(tasks).length,
       createDate,
-      readyDate,
+      readyDate
     };
 
     setData(newTask);
-    resetForm();
 
     setTimeout(() => close(), 400);
-    setData(newTask);
+    setTimeout(() => resetForm(), 400);
   };
 
   return (
@@ -117,8 +111,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           name={'priority'}
           value={priority}
           onChange={(e) => setPriority(e.target.value as taskPriority)}
-          placeholder={'Select priority:'}
-        >
+          placeholder={'Select priority:'}>
           <option value="1">standard</option>
           <option value="2">height</option>
         </select>
@@ -128,8 +121,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           id={'status'}
           name={'status'}
           value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}
-        >
+          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}>
           <option value="QUEUE">QUEUE</option>
           <option value="DEVELOPMENT">DEVELOPMENT</option>
           <option value="DONE">DONE</option>
@@ -165,7 +157,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
             <span className="slider round"></span>
           </label>
         </div>
-        <LoadPhotoInput taskId={taskId} setStateValue={setPreview} />
+        <LoadPhotoInput files={localFiles} taskId={taskId} setFiles={setLocalFiles} />
 
         <div className="submitButton">
           <div className="buttonWrap">
