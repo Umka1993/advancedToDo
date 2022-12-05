@@ -20,7 +20,7 @@ export const Project: FC<IProjectProps> = ({ project }) => {
   const [tasksStatusSort, setTasksStatusSort] = useState<ITasksStatusSort>({
     developmentTaskList: [],
     queueTaskList: [],
-    doneTaskList: []
+    doneTaskList: [],
   });
   const [columns, setColumns] = useState<ItemColumn | {}>();
 
@@ -36,22 +36,22 @@ export const Project: FC<IProjectProps> = ({ project }) => {
     setTasksStatusSort({
       developmentTaskList,
       doneTaskList,
-      queueTaskList
+      queueTaskList,
     });
 
     const columnsObj = {
       '1': {
         name: TaskStatus.QUEUE,
-        items: queueTaskList
+        items: queueTaskList,
       },
       '2': {
         name: TaskStatus.DEVELOPMENT,
-        items: developmentTaskList
+        items: developmentTaskList,
       },
       '3': {
         name: TaskStatus.DONE,
-        items: doneTaskList
-      }
+        items: doneTaskList,
+      },
     };
     setColumns(columnsObj);
   }, [tasks]);
@@ -65,9 +65,11 @@ export const Project: FC<IProjectProps> = ({ project }) => {
   } else {
     return (
       <div className={'project'}>
-        <GoBack />
+        <div className="project__headline">
+          <GoBack />
+          <h1>Project name: {project.name}</h1>
+        </div>
 
-        <h1>Project name: {project.name}</h1>
         <TaskList setColumns={setColumns} columns={columns} tasksStatusSort={tasksStatusSort} />
       </div>
     );

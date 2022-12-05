@@ -35,8 +35,8 @@ export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ files, setFiles }) => {
           id={'photo'}
           name={'photo'}
           multiple={true}
-          onChange={(file) => {
-            getFile(file);
+          onChange={(event) => {
+            getFile(event);
           }}
         />
       </label>

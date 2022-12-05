@@ -4,12 +4,23 @@
   justify-content: flex-start;
 
   width: 100%;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 130px);
   background: transparent;
+  &__headline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    h1 {
+      padding: 10px;
+    }
 
-  h1 {
-    padding: 10px;
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 18px;
+      }
+    }
   }
+
   p {
     font-size: 25px;
     margin-bottom: 15px;

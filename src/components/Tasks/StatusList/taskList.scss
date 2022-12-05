@@ -1,10 +1,16 @@
 .taskList {
+  //height: calc(100vh - 155px);
+  min-height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
   &__wrap {
     display: grid;
-    grid-template-columns: repeat(3, minmax(100px, 320px));
-    gap: 10px;
+    //grid-template-columns: repeat(3, minmax(400px, 33%));
+    gap: 5px;
     border-radius: 5px;
-    margin-left: 15px;
+    justify-content: space-between;
+    min-height: 100%;
     li {
       width: 100%;
     }
@@ -12,8 +18,8 @@
     .colum {
       margin: 8px 0 0 0;
       border-radius: 15px;
-      width: 95%;
-      max-width: 320px;
+      width: 100%;
+      //max-width: 320px;
       background: #5f9ea0a6;
       padding: 0 10px 10px;
 
@@ -26,7 +32,7 @@
         padding-top: 8px;
       }
       .scrollBlock {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 200px);
         overflow: auto;
         border-radius: 15px;
         scrollbar-gutter: stable both-edges;
@@ -39,6 +45,19 @@
           display: none;
         }
       }
+    }
+
+    @media screen and (min-width: 1200px) {
+      grid-template-columns: repeat(3, minmax(400px, 33%));
+    }
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(3, minmax(420px, 33%));
+    }
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(3, minmax(320px, 33%));
+    }
+    @media screen and (max-width: 320px) {
+      grid-template-columns: repeat(3, minmax(240px, 33%));
     }
   }
   &__item {

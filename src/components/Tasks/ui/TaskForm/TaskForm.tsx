@@ -2,18 +2,19 @@ import React, { FC, useEffect, useState } from 'react';
 import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
 import {
-  ITask,
   filesType,
+  ITask,
   taskPriority,
   taskPriorityEnum,
   taskStatus,
-  TaskStatus
+  TaskStatus,
 } from '../../../../store/reducers/tasks/taskTypes';
 import { useTypedSelector } from '../../../../hooks/useTypeSelector';
 import './taskForm.scss';
 import '../LoadPhotoInput/loadPhotoInput.scss';
 import '../PhotoCollection/photoCollection.scss';
 import { LoadPhotoInput } from '../LoadPhotoInput/LoadPhotoInput';
+import { Select } from '../Select/Select';
 
 interface IForm {
   close: () => void;
@@ -27,11 +28,17 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const [localFiles, setLocalFiles] = useState<filesType[]>([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
   const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
+
   const [createDate, setCreateDate] = useState(new Date().toLocaleDateString('de-DE'));
   const [readyDate, setReadyDate] = useState('');
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
+
+  const optionsPriority: taskPriority[] = [taskPriorityEnum.STANDARD, taskPriorityEnum.HEIGHT];
+
+  const statusOptions: taskStatus[] = [TaskStatus.QUEUE, TaskStatus.DEVELOPMENT, TaskStatus.DONE];
 
   useEffect(() => {
     status && setNewStatus(status);
@@ -73,7 +80,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       isCanAddSubTask: true,
       id: taskId ?? ++Object.keys(tasks).length,
       createDate,
-      readyDate
+      readyDate,
     };
 
     setData(newTask);
@@ -105,27 +112,19 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           label={'Task description'}
         />
 
-        <label htmlFor="priority">Priority</label>
-        <select
-          id={'priority'}
-          name={'priority'}
-          value={priority}
-          onChange={(e) => setPriority(e.target.value as taskPriority)}
-          placeholder={'Select priority:'}>
-          <option value="1">standard</option>
-          <option value="2">height</option>
-        </select>
+        <Select<taskPriority>
+          defaultValue={priority}
+          labelName={'Priority'}
+          options={optionsPriority}
+          setOption={setPriority}
+        />
 
-        <label htmlFor="status">Status</label>
-        <select
-          id={'status'}
-          name={'status'}
-          value={newStatus}
-          onChange={(e) => setNewStatus(e.target.value as TaskStatus)}>
-          <option value="QUEUE">QUEUE</option>
-          <option value="DEVELOPMENT">DEVELOPMENT</option>
-          <option value="DONE">DONE</option>
-        </select>
+        <Select<taskStatus>
+          defaultValue={newStatus}
+          labelName={'Status'}
+          options={statusOptions}
+          setOption={setNewStatus}
+        />
 
         <label htmlFor="createDate">Create date</label>
         <input
