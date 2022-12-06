@@ -31,6 +31,7 @@ export const LoadPhotoInput: FC<ILoadPhotoInput> = ({ files, setFiles }) => {
         Фото
         <img src={loadPhoto} alt="loadPhoto" />
         <input
+          className={'uploadFileInput'}
           type="file"
           id={'photo'}
           name={'photo'}

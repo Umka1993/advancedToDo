@@ -1,4 +1,5 @@
 import React, { FC, InputHTMLAttributes, useEffect, useState } from 'react';
+import { useDebounce } from '../../../../hooks/useDebounse';
 
 interface IInput extends InputHTMLAttributes<any> {
   stateValue: string;
@@ -14,17 +15,25 @@ export const Input: FC<IInput> = ({
   required,
   name,
 
-  type
+  type,
 }) => {
-  const [localState, setLocalState] = useState(stateValue);
+  const [localState, setLocalState] = useState('');
+
+  const debouncedValue = useDebounce<string>(localState, 500);
 
   useEffect(() => {
     setLocalState(stateValue);
   }, [stateValue]);
 
+  useEffect(() => {
+    seStateValue(debouncedValue);
+  }, [debouncedValue]);
+
   return (
-    <>
-      <label htmlFor={name}>{label}</label>
+    <div className={'inputWrapper'}>
+      <label className={'label'} htmlFor={name}>
+        {label}
+      </label>
       <input
         type={type}
         id={id}
@@ -32,8 +41,7 @@ export const Input: FC<IInput> = ({
         value={localState}
         onChange={(e) => setLocalState(e.target.value)}
         required={required}
-        onBlur={() => seStateValue(localState)}
       />
-    </>
+    </div>
   );
 };

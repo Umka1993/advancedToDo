@@ -45,7 +45,7 @@ export const StatusBoard: FC<IStatusBoard> = ({ columnId, items, name }) => {
   };
 
   useEffect(() => {
-    !isOpen && taskId && setTaskId(0);
+    !isOpen && taskId && setTaskId(undefined);
   }, [isOpen]);
 
   return (
@@ -67,8 +67,9 @@ export const StatusBoard: FC<IStatusBoard> = ({ columnId, items, name }) => {
                   ref={provided.innerRef}
                   className={'scrollBlock__taskTape'}
                   style={{
-                    background: snapshot.isDraggingOver ? 'lightblue' : 'transparent'
-                  }}>
+                    background: snapshot.isDraggingOver ? 'lightblue' : 'transparent',
+                  }}
+                >
                   <Task ToggleEditModal={ToggleEditModal} items={items} {...provided} />
 
                   {provided.placeholder}

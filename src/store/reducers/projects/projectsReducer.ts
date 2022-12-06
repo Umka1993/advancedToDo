@@ -10,11 +10,11 @@ const initialState: IProjectsState = {
       name: 'Create Amazon',
       id: 1,
       path: '/createAmazon',
-      tasks: [1]
+      tasks: [],
     },
     { name: 'Create AliExpress', id: 2, path: '/createAliExpress', tasks: [] },
-    { name: 'Dinner with my wife', id: 3, path: '/dinner', tasks: [] }
-  ]
+    { name: 'Dinner with my wife', id: 3, path: '/dinner', tasks: [] },
+  ],
 };
 
 export const projectsReducer = (state = initialState, action: IProjectAction): IProjectsState => {

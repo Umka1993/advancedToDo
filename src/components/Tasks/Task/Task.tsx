@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { Draggable, DroppableProvided } from 'react-beautiful-dnd';
 import { ITask } from '../../../store/reducers/tasks/taskTypes';
 import './task.scss';
-import classNames from 'classnames';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
 import { PhotoCollection } from '../ui/PhotoCollection/PhotoCollection';
 
@@ -26,8 +25,9 @@ export const Task: FC<ITaskProps> = ({ ToggleEditModal, items }) => {
                   {...dragHandleProps}
                   style={{
                     backgroundColor: snapshot.isDragging ? '#263B4A' : '#c0bdbd',
-                    ...draggableProps.style
-                  }}>
+                    ...draggableProps.style,
+                  }}
+                >
                   <div className="task__headline">
                     <span>{item.id}</span>
                     <span>{item.name}</span>
@@ -82,23 +82,11 @@ export const Task: FC<ITaskProps> = ({ ToggleEditModal, items }) => {
                       )}
                     </div>
 
-                    <div className="subtasks">
-                      <form className={classNames('subtasks__form')}>
-                        {item.subTasks ? (
-                          item.subTasks.map((subT) => (
-                            <label key={subT}>
-                              <input type={'radio'} /> {subT}
-                            </label>
-                          ))
-                        ) : (
-                          <span>no subtasks</span>
-                        )}
-                      </form>
-                    </div>
+                    {/* <SubTasks subTasks={item.subTasks} /> */}
 
                     <div className="buttons">
                       <button>+ comment</button>
-                      <button>+ subtask</button>
+                      <button onClick={() => ToggleEditModal(item.id)}>+ subtask</button>
                     </div>
                   </div>
                 </div>

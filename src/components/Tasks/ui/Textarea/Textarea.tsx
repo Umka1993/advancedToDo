@@ -13,7 +13,7 @@ export const Textarea: FC<ITextarea> = ({ seStateValue, label, stateValue, id, n
   }, [stateValue]);
 
   return (
-    <>
+    <div className={'textAreaWrapper'}>
       <label htmlFor={name}>{label}</label>
       <textarea
         id={id}
@@ -22,6 +22,6 @@ export const Textarea: FC<ITextarea> = ({ seStateValue, label, stateValue, id, n
         onChange={(e) => setLocalState(e.target.value)}
         onBlur={() => seStateValue(localState)}
       />
-    </>
+    </div>
   );
 };

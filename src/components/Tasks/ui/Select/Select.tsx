@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './select.scss';
 import { useOnClickOutside } from '../../../../hooks/useOutsideClick';
 
@@ -19,6 +19,10 @@ export const Select = <T extends string>({
   const [selectedOption, setSelectedOption] = useState<T>(defaultValue);
   const optionsRef = useRef(null);
 
+  useEffect(() => {
+    setSelectedOption(defaultValue);
+  }, [defaultValue]);
+
   useOnClickOutside(optionsRef, () => setIsOpen(false));
 
   const toggling = () => setIsOpen(!isOpen);
@@ -34,7 +38,7 @@ export const Select = <T extends string>({
       <span>{labelName}</span>
       <div className={'dropDownContainer'}>
         <div className={'dropDownHeader'} onClick={toggling}>
-          {selectedOption ?? defaultValue}
+          {selectedOption}
         </div>
         {isOpen && (
           <div ref={optionsRef} className={'dropDownListContainer'}>

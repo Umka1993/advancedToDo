@@ -14,6 +14,10 @@ code {
   margin: 0;
   box-sizing: border-box;
 }
+p{
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
 .app {
 }
 .container {
@@ -72,6 +76,15 @@ button:hover svg {
   fill: white;
   transition: all 0.1s linear;
 }
+button:disabled {
+  cursor: auto;
+
+}
+
+button:disabled svg {
+  fill: black;
+}
+
 
 button svg {
   width: 20px;

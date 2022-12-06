@@ -3,6 +3,7 @@ import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
 import {
   filesType,
+  ISubTask,
   ITask,
   taskPriority,
   taskPriorityEnum,
@@ -15,6 +16,9 @@ import '../LoadPhotoInput/loadPhotoInput.scss';
 import '../PhotoCollection/photoCollection.scss';
 import { LoadPhotoInput } from '../LoadPhotoInput/LoadPhotoInput';
 import { Select } from '../Select/Select';
+import { SubTasks } from '../../SubTasks/SubTasks';
+import classNames from 'classnames';
+import { Timer } from '../Timer/Timer';
 
 interface IForm {
   close: () => void;
@@ -32,9 +36,12 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
   const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
 
-  const [createDate, setCreateDate] = useState(new Date().toLocaleDateString('de-DE'));
+  const [createDate, setCreateDate] = useState<string>(new Date().toString());
   const [readyDate, setReadyDate] = useState('');
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
+  const [subTasks, setSubTasks] = useState<ISubTask[]>([]);
+  const [isNameEmpty, setIsNameEmpty] = useState<boolean>();
+  const [isInProgress, setIsInProgress] = useState(false);
 
   const optionsPriority: taskPriority[] = [taskPriorityEnum.STANDARD, taskPriorityEnum.HEIGHT];
 
@@ -45,9 +52,22 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   }, [status]);
 
   useEffect(() => {
+    name && setIsNameEmpty(false);
+  }, [name]);
+
+  useEffect(() => {
     if (taskId) {
-      const { priority, name, createDate, files, isCanAddSubTask, description, readyDate, status } =
-        tasks[taskId];
+      const {
+        priority,
+        name,
+        createDate,
+        subTasks,
+        files,
+        isCanAddSubTask,
+        description,
+        readyDate,
+        status,
+      } = tasks[taskId];
 
       setIsCanAddSubTask(isCanAddSubTask);
       setCreateDate(createDate);
@@ -56,7 +76,8 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       setPriority(priority);
       setNewStatus(status);
       setLocalFiles(files);
-      readyDate && setReadyDate(readyDate);
+      setSubTasks(subTasks);
+      setIsInProgress(status === TaskStatus.DEVELOPMENT);
     }
   }, [taskId]);
 
@@ -69,38 +90,55 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
     setReadyDate('');
   };
 
-  const addNewTask = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newTask: ITask = {
-      description,
-      status: newStatus,
-      files: localFiles ?? [],
-      priority,
-      name,
-      isCanAddSubTask: true,
-      id: taskId ?? ++Object.keys(tasks).length,
-      createDate,
-      readyDate,
-    };
+  const addNewTask = (e: React.MouseEvent<HTMLButtonElement>) => {
+    !name && setIsNameEmpty((prevState) => !prevState);
 
-    setData(newTask);
+    if (name) {
+      const newTask: ITask = {
+        description,
+        status: newStatus,
+        files: localFiles ?? [],
+        priority,
+        name,
+        isCanAddSubTask: true,
+        id: taskId ?? ++Object.keys(tasks).length,
+        createDate,
+        readyDate,
+        subTasks,
+      };
 
-    setTimeout(() => close(), 400);
-    setTimeout(() => resetForm(), 400);
+      setData(newTask);
+
+      setTimeout(() => close(), 400);
+      setTimeout(() => resetForm(), 400);
+    }
   };
 
   return (
     <div className={'taskForm'}>
-      <form onSubmit={(e) => addNewTask(e)}>
-        <Input
-          seStateValue={setName}
-          type={'text'}
-          id={'name'}
-          name={'name'}
-          stateValue={name}
-          required={!taskId}
-          label={'Task Name'}
-        />
+      <h3>Task number:{taskId}</h3>
+      {isInProgress && (
+        <div className={'taskForm__inProgress'}>
+          Time in progress:
+          <Timer createDate={createDate} />
+        </div>
+      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className={'required'}>
+          <Input
+            seStateValue={setName}
+            type={'text'}
+            id={'name'}
+            name={'name'}
+            stateValue={name}
+            label={'Task Name'}
+          />
+          {isNameEmpty && <span>Name is required</span>}
+        </div>
 
         <Textarea
           seStateValue={setDescription}
@@ -126,14 +164,16 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           setOption={setNewStatus}
         />
 
-        <label htmlFor="createDate">Create date</label>
-        <input
-          id={'createDate'}
-          name={'createDate'}
-          readOnly={true}
-          type={'text'}
-          value={createDate}
-        />
+        <div className={'inputWrapper'}>
+          <label htmlFor="createDate">Create date</label>
+          <input
+            id={'createDate'}
+            name={createDate}
+            readOnly={true}
+            type={'text'}
+            value={new Date(createDate).toLocaleString('de-DE')}
+          />
+        </div>
 
         <Input
           seStateValue={setReadyDate}
@@ -156,11 +196,19 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
             <span className="slider round"></span>
           </label>
         </div>
+
         <LoadPhotoInput files={localFiles} taskId={taskId} setFiles={setLocalFiles} />
 
-        <div className="submitButton">
-          <div className="buttonWrap">
-            <button type={'submit'} className="btn addButton">
+        <SubTasks setSubtasks={setSubTasks} subTasks={subTasks} />
+
+        <div className={'submitButton'}>
+          <div
+            className={classNames('', {
+              buttonWrap: name,
+              disabledButton: !name,
+            })}
+          >
+            <button type={'button'} className="btn addButton" onClick={(e) => addNewTask(e)}>
               <span>{taskId ? 'Edit task' : 'Add task'}</span>
               <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" height="62" width="62" />
             </button>
