@@ -1,4 +1,4 @@
-DEPLOY: https://advancedtodo.netlify.app/1
+DEPLOY: https://advancedtodo.netlify.app
 
 
 
