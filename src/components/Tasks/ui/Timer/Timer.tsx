@@ -1,15 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getInProgressTime } from '../TaskForm/helpers';
+import { getInProgressTime } from './helpers';
 
 interface ITimer {
-  createDate: string;
+  timeStartInProgress: string;
 }
 
-export const Timer: FC<ITimer> = ({ createDate }) => {
+export const Timer: FC<ITimer> = ({ timeStartInProgress }) => {
   const [inProgressTime, setInprogressTime] = useState<string>();
 
   useEffect(() => {
-    const interval = setInterval(() => setInprogressTime(getInProgressTime(createDate)), 1000);
+    const interval = setInterval(
+      () => setInprogressTime(getInProgressTime(timeStartInProgress)),
+      1000
+    );
     return () => clearInterval(interval);
   }, []);
 

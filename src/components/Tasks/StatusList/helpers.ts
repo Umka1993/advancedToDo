@@ -1,5 +1,5 @@
 import { DropResult } from 'react-beautiful-dnd';
-import { ITask, tasksItem } from '../../../store/reducers/tasks/taskTypes';
+import { ITask, tasksItem, TaskStatus } from '../../../store/reducers/tasks/taskTypes';
 
 export const onDragEnd = (
   result: DropResult,
@@ -19,12 +19,22 @@ export const onDragEnd = (
 
     const foundedTask = tasks[removed.id];
 
-    const editedTask = {
+    const editedTask: ITask = {
       id: foundedTask.id,
       name: foundedTask.name,
       status: destColumn.name,
+      timeStartInProgress:
+        destColumn.name === TaskStatus.DEVELOPMENT
+          ? new Date().toString()
+          : foundedTask.timeStartInProgress,
+      isCanAddSubTask: foundedTask.isCanAddSubTask,
+      readyDate: foundedTask.readyDate,
       createDate: foundedTask.createDate,
-      isCanAddTask: foundedTask.isCanAddSubTask
+      files: foundedTask.files,
+      priority: foundedTask.priority,
+      description: foundedTask.description,
+      subTasks: foundedTask.subTasks,
+      comments: foundedTask.comments
     };
     return { ...foundedTask, ...editedTask };
   }

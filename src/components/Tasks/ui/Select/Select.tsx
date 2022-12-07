@@ -13,10 +13,10 @@ export const Select = <T extends string>({
   labelName,
   defaultValue,
   options,
-  setOption,
+  setOption
 }: ISelect<T>): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<T>(defaultValue);
+  const [selectedOption, setSelectedOption] = useState<T>();
   const optionsRef = useRef(null);
 
   useEffect(() => {

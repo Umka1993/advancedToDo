@@ -9,12 +9,12 @@ const initialState: IProjectsState = {
     {
       name: 'Create Amazon',
       id: 1,
-      path: '/createAmazon',
-      tasks: [],
+
+      tasks: []
     },
-    { name: 'Create AliExpress', id: 2, path: '/createAliExpress', tasks: [] },
-    { name: 'Dinner with my wife', id: 3, path: '/dinner', tasks: [] },
-  ],
+    { name: 'Create AliExpress', id: 2, tasks: [] },
+    { name: 'Dinner with my wife', id: 3, tasks: [] }
+  ]
 };
 
 export const projectsReducer = (state = initialState, action: IProjectAction): IProjectsState => {
@@ -36,7 +36,6 @@ export const projectsReducer = (state = initialState, action: IProjectAction): I
         project.id === action.payload.projectId ? copyEditedProject : project
       );
 
-      // возвращаю стейт и измененный projects []
       return { ...state, projects: copyProjects as IProject[] };
     }
 

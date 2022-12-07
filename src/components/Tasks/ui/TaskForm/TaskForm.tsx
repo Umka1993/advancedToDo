@@ -3,6 +3,7 @@ import { Input } from '../Input/Input';
 import { Textarea } from '../Textarea/Textarea';
 import {
   filesType,
+  IComment,
   ISubTask,
   ITask,
   taskPriority,
@@ -36,15 +37,15 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   const [priority, setPriority] = useState<taskPriority>(taskPriorityEnum.STANDARD);
   const [newStatus, setNewStatus] = useState<taskStatus>(TaskStatus.QUEUE);
 
-  const [createDate, setCreateDate] = useState<string>(new Date().toString());
-  const [readyDate, setReadyDate] = useState('');
+  const [localeCreateDate, setCreateDate] = useState<string>(new Date().toString());
+  const [readyDate, setReadyDate] = useState<string>('');
   const [isCanAddSubTask, setIsCanAddSubTask] = useState(true);
   const [subTasks, setSubTasks] = useState<ISubTask[]>([]);
   const [isNameEmpty, setIsNameEmpty] = useState<boolean>();
-  const [isInProgress, setIsInProgress] = useState(false);
+  const [timeInProgress, setTimeInProgress] = useState<string>();
+  const [comments, setComments] = useState<IComment[]>([]);
 
   const optionsPriority: taskPriority[] = [taskPriorityEnum.STANDARD, taskPriorityEnum.HEIGHT];
-
   const statusOptions: taskStatus[] = [TaskStatus.QUEUE, TaskStatus.DEVELOPMENT, TaskStatus.DONE];
 
   useEffect(() => {
@@ -60,13 +61,15 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       const {
         priority,
         name,
-        createDate,
+        timeStartInProgress,
         subTasks,
         files,
         isCanAddSubTask,
         description,
         readyDate,
+        createDate,
         status,
+        comments,
       } = tasks[taskId];
 
       setIsCanAddSubTask(isCanAddSubTask);
@@ -77,7 +80,9 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       setNewStatus(status);
       setLocalFiles(files);
       setSubTasks(subTasks);
-      setIsInProgress(status === TaskStatus.DEVELOPMENT);
+      setTimeInProgress(timeStartInProgress);
+      setReadyDate(readyDate);
+      setComments(comments);
     }
   }, [taskId]);
 
@@ -102,9 +107,11 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
         name,
         isCanAddSubTask: true,
         id: taskId ?? ++Object.keys(tasks).length,
-        createDate,
+        createDate: localeCreateDate,
         readyDate,
         subTasks,
+        timeStartInProgress: newStatus === TaskStatus.DEVELOPMENT ? new Date().toString() : '',
+        comments,
       };
 
       setData(newTask);
@@ -117,10 +124,10 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
   return (
     <div className={'taskForm'}>
       <h3>Task number:{taskId}</h3>
-      {isInProgress && (
+      {timeInProgress && (
         <div className={'taskForm__inProgress'}>
           Time in progress:
-          <Timer createDate={createDate} />
+          <Timer timeStartInProgress={timeInProgress} />
         </div>
       )}
       <form
@@ -130,7 +137,7 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
       >
         <div className={'required'}>
           <Input
-            seStateValue={setName}
+            setStateValue={setName}
             type={'text'}
             id={'name'}
             name={'name'}
@@ -165,18 +172,18 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
         />
 
         <div className={'inputWrapper'}>
-          <label htmlFor="createDate">Create date</label>
+          <label htmlFor="timeStartInProgress">Create date: </label>
           <input
-            id={'createDate'}
-            name={createDate}
+            id={'timeStartInProgress'}
+            name={'timeStartInProgress'}
             readOnly={true}
             type={'text'}
-            value={new Date(createDate).toLocaleString('de-DE')}
+            value={new Date(new Date(localeCreateDate).getTime()).toLocaleTimeString()}
           />
         </div>
 
         <Input
-          seStateValue={setReadyDate}
+          setStateValue={setReadyDate}
           type={'date'}
           id={'readyDate'}
           name={'readyDate'}
@@ -210,7 +217,12 @@ export const TaskForm: FC<IForm> = ({ taskId, close, setData, status }) => {
           >
             <button type={'button'} className="btn addButton" onClick={(e) => addNewTask(e)}>
               <span>{taskId ? 'Edit task' : 'Add task'}</span>
-              <img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" height="62" width="62" />
+              <img
+                alt={'success'}
+                src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png"
+                height="62"
+                width="62"
+              />
             </button>
           </div>
         </div>

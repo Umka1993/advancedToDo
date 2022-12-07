@@ -2,15 +2,18 @@ import React, { FC } from 'react';
 import { Draggable, DroppableProvided } from 'react-beautiful-dnd';
 import { ITask } from '../../../store/reducers/tasks/taskTypes';
 import './task.scss';
+// import './cardRotateAnimation.scss';
 import { ReactComponent as Edit } from '../../../assets/icons/edit-svgrepo-com.svg';
-import { PhotoCollection } from '../ui/PhotoCollection/PhotoCollection';
+import { TaskBody } from './TaskBody/TaskBody';
+import classNames from 'classnames';
 
 interface ITaskProps extends DroppableProvided {
   ToggleEditModal: (arg: number) => void;
   items: ITask[];
+  ToggleCommentModal: (arg: number) => void;
 }
 
-export const Task: FC<ITaskProps> = ({ ToggleEditModal, items }) => {
+export const Task: FC<ITaskProps> = ({ ToggleEditModal, items, ToggleCommentModal }) => {
   return (
     <div>
       {items.map((item, index) => {
@@ -25,69 +28,45 @@ export const Task: FC<ITaskProps> = ({ ToggleEditModal, items }) => {
                   {...dragHandleProps}
                   style={{
                     backgroundColor: snapshot.isDragging ? '#263B4A' : '#c0bdbd',
-                    ...draggableProps.style,
-                  }}
-                >
+                    ...draggableProps.style
+                  }}>
                   <div className="task__headline">
                     <span>{item.id}</span>
                     <span>{item.name}</span>
 
-                    <button onClick={() => ToggleEditModal(item.id)} className={'edit'}>
+                    <button
+                      type={'button'}
+                      onClick={() => ToggleEditModal(item.id)}
+                      className={'edit'}>
                       <Edit />
                     </button>
                   </div>
-                  <div className="task__body">
-                    <table className="table">
-                      <tbody>
-                        <tr>
-                          <th>Priority:</th>
-                          <td>{item.priority}</td>
-                        </tr>
 
-                        <tr>
-                          <th>Create date:</th>
-                          <td>{item.createDate}</td>
-                        </tr>
-
-                        <tr>
-                          <th>Ready date:</th>
-                          <td>{item.readyDate}</td>
-                        </tr>
-
-                        <tr>
-                          <th>In Progress:</th>
-                          <td>{item.inProgressTime}</td>
-                        </tr>
-
-                        <tr>
-                          <th>Status:</th>
-                          <td>{item.status}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-                    <div className={'description'}>
-                      <span className={'description__title'}>Description:</span>
-                      <textarea readOnly={true} value={item.description} />
+                  <div className="card">
+                    <div className={classNames('card-side front')}>
+                      <TaskBody
+                        id={item.id}
+                        name={item.name}
+                        status={item.status}
+                        description={item.description}
+                        createDate={item.createDate}
+                        priority={item.priority}
+                        files={item.files}
+                        isCanAddSubTask={item.isCanAddSubTask}
+                        subTasks={item.subTasks}
+                        readyDate={item.readyDate}
+                        timeStartInProgress={item.timeStartInProgress}
+                        comments={item.comments}
+                      />
                     </div>
-
-                    <div className="files">
-                      {item.files?.length ? (
-                        <>
-                          <span className={'files__title'}>Files:</span>
-                          <PhotoCollection stateValue={item.files ?? []} />
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-
-                    {/* <SubTasks subTasks={item.subTasks} /> */}
-
-                    <div className="buttons">
-                      <button>+ comment</button>
-                      <button onClick={() => ToggleEditModal(item.id)}>+ subtask</button>
-                    </div>
+                  </div>
+                  <div className="task__buttons">
+                    <button type={'button'} onClick={() => ToggleEditModal(item.id)}>
+                      + subtask
+                    </button>
+                    <button type={'button'} onClick={() => ToggleCommentModal(item.id)}>
+                      + comment
+                    </button>
                   </div>
                 </div>
               );

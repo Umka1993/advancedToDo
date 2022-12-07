@@ -10,7 +10,7 @@ export const SubTasksItem: FC<ISubTasksItem> = ({
   id,
   subTaskDescription,
   ready,
-  editSubTasks,
+  editSubTasks
 }) => {
   return (
     <>

@@ -1,7 +1,7 @@
 import './modal.scss';
 import { FC, ReactNode, useRef } from 'react';
 import classNames from 'classnames';
-import { useOnClickOutside } from '../../hooks/useOutsideClick';
+import { useOnClickOutside } from '../../../hooks/useOutsideClick';
 
 interface IModal {
   show: boolean;
@@ -17,9 +17,8 @@ export const Modal: FC<IModal> = ({ show, children, setIsOpen }) => {
     <>
       <div
         className={classNames('modalContainer', {
-          show,
-        })}
-      >
+          show
+        })}>
         <div ref={modalRef} className="modal" onClick={(e) => e.stopPropagation()}>
           <main className="modal_content">{children}</main>
         </div>

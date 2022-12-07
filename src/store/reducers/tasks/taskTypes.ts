@@ -3,18 +3,27 @@ export interface ITask {
   name: string;
   status: taskStatus;
   description: string;
+  timeStartInProgress?: string;
   createDate: string;
-  inProgressTime?: string;
-  readyDate?: string;
+  readyDate: string;
   priority: taskPriority;
   files: filesType[];
   isCanAddSubTask: boolean;
-  comments?: number[];
+  comments: IComment[];
   subTasks: ISubTask[];
+}
+interface IEditedCommentsTask {
+  taskId: number;
+  comments: IComment[];
 }
 
 export type taskStatus = TaskStatus.DEVELOPMENT | TaskStatus.DONE | TaskStatus.QUEUE;
 export type taskPriority = taskPriorityEnum.HEIGHT | taskPriorityEnum.STANDARD;
+
+export interface IComment {
+  id: number;
+  content: string;
+}
 
 export interface ISubTask {
   id: number;
@@ -29,7 +38,7 @@ export interface filesType {
 
 export enum taskPriorityEnum {
   STANDARD = 'standard',
-  HEIGHT = 'height',
+  HEIGHT = 'height'
 }
 
 export type tasksItem = Record<number, ITask>;
@@ -41,19 +50,24 @@ export interface ITasksState {
 export enum TaskStatus {
   QUEUE = 'QUEUE',
   DEVELOPMENT = 'DEVELOPMENT',
-  DONE = 'DONE',
+  DONE = 'DONE'
 }
 export enum TaskActionEnum {
   ADD_TASK = 'ADD_TASK',
   EDIT_TASK = 'EDIT_TASK',
   DELETE_TASK = 'DELETE_TASK',
+  ADD_COMMENT = 'ADD_COMMENT'
 }
 
-export type TaskAction = IAddTaskAction | IEditTaskAction | IDeleteTaskAction;
+export type TaskAction = IAddTaskAction | IEditTaskAction | IDeleteTaskAction | IAddCommentAction;
 
 interface IAddTaskAction {
   type: TaskActionEnum.ADD_TASK;
   payload: ITask;
+}
+interface IAddCommentAction {
+  type: TaskActionEnum.ADD_COMMENT;
+  payload: IEditedCommentsTask;
 }
 interface IEditTaskAction {
   type: TaskActionEnum.EDIT_TASK;

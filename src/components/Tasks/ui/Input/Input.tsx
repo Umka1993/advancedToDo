@@ -1,20 +1,23 @@
-import React, { FC, InputHTMLAttributes, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDebounce } from '../../../../hooks/useDebounse';
 
-interface IInput extends InputHTMLAttributes<any> {
+interface IInput {
   stateValue: string;
-  seStateValue: (arg: string) => void;
+  setStateValue: (arg: string) => void;
   label: string;
+  id: string;
+  required?: boolean;
+  name: string;
+  type: string;
 }
 
 export const Input: FC<IInput> = ({
-  seStateValue,
+  setStateValue,
   label,
   stateValue,
   id,
-  required,
   name,
-
+  required,
   type,
 }) => {
   const [localState, setLocalState] = useState('');
@@ -26,7 +29,7 @@ export const Input: FC<IInput> = ({
   }, [stateValue]);
 
   useEffect(() => {
-    seStateValue(debouncedValue);
+    setStateValue(debouncedValue);
   }, [debouncedValue]);
 
   return (

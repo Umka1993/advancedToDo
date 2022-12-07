@@ -1,0 +1,67 @@
+.body {
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+
+  p {
+    font-size: 15px;
+  }
+  &__subtasks {
+    margin-top: 10px;
+    border-top: 1px solid black;
+    padding: 10px;
+
+    .subtaskItem {
+      list-style: none;
+      padding-left: 10px;
+
+      span {
+        margin-left: 8px;
+      }
+    }
+    .ready {
+      text-decoration: line-through;
+    }
+  }
+  &__table {
+    border-collapse: collapse;
+    width: 100%;
+
+    tbody {
+      tr {
+        border-bottom: 1px solid black;
+        height: 35px;
+        vertical-align: bottom;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        td {
+          padding-left: 10px;
+        }
+
+        th {
+          text-align: left;
+        }
+      }
+    }
+  }
+  &__description {
+    margin-top: 20px;
+    padding: 0 5px 5px 0;
+
+    &__title {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  }
+  &__files {
+    margin-top: 10px;
+    padding: 10px;
+
+    border-top: 1px solid black;
+
+    &__title {
+      color: black;
+      text-align: left;
+    }
+  }
+}

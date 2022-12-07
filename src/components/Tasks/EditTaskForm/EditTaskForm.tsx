@@ -15,7 +15,7 @@ export const EditTaskForm: FC<IEditTaskForm> = ({ close, taskId }) => {
   const dispatch = useDispatch();
 
   const dispatchEditTask = (dispatch: Dispatch<TaskAction>, task: ITask) => {
-    return dispatch({ type: TaskActionEnum.ADD_TASK, payload: task });
+    return dispatch({ type: TaskActionEnum.EDIT_TASK, payload: task });
   };
 
   useEffect(() => {

@@ -5,6 +5,7 @@
   margin: 0 0 8px 0;
   min-height: 50px;
   border-radius: 15px;
+  position: relative;
   p {
     margin: 0;
   }
@@ -32,59 +33,18 @@
     }
   }
 
-  &__body {
-    background: white;
-    border-radius: 5px;
-    padding: 5px;
+  &__card {
+  }
+  .rotateCard {
+  }
 
-    p {
-      font-size: 15px;
-    }
-    .table {
-      border-collapse: collapse;
-      width: 100%;
-
-      tbody {
-        tr {
-          border-bottom: 1px solid black;
-          height: 35px;
-          vertical-align: bottom;
-          td {
-            &:nth-child(even) {
-              text-align: center;
-            }
-          }
-
-          th {
-            text-align: left;
-          }
-        }
-      }
-    }
-    .description {
-      margin-top: 20px;
-      padding: 0 5px 5px 0;
-
-      &__title {
-        font-weight: bold;
-        margin-right: 5px;
-      }
-    }
-    .files {
-      &__title {
-        color: black;
-        text-align: left;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      button {
-        padding: 2px;
-      }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    button {
+      padding: 2px;
     }
   }
 }
